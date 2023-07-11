@@ -1,13 +1,9 @@
+#pragma once
 #include <string.h>
-#include <vector>
-#include <stdint.h>
-#include <unistd.h>
-#include <time.h>
+#include <sstream>
+#include <stdio.h>
 
 #include "merge_manager.h"
-
-using namespace std;
-using namespace rapidjson;
 
 struct ScanResult;
 struct FilterResult;
@@ -47,7 +43,7 @@ public:
     bool BetweenOperator(int lv, int rv1, int rv2);
     bool BetweenOperator(string lv, string rv1, string rv2);
     bool IsOperator(string lv, char* nonnullbit, int isnot);
-    bool isvarc(vector<int> datatype, int ColNum, vector<int> varcharlist);
+    bool isvarc(vector<int> datatype, int ColNum, vector<int>& varcharlist);
     void makedefaultmap(vector<string> ColName, vector<int> startoff, vector<int> offlen, vector<int> datatype, int ColNum, unordered_map<string, int> &startptr, unordered_map<string, int> &lengthRaw, unordered_map<string, int> &typedata);
     void makenewmap(int isvarchar, int ColNum, unordered_map<string, int> &newstartptr, unordered_map<string, int> &newlengthraw, vector<int> datatype, unordered_map<string, int> lengthRaw, vector<string> ColName, int &iter, vector<int> startoff, vector<int> offlen, char *rowbuf);
     void compareGE(string LV, string RV, bool &CV, bool &TmpV, bool &canSaved, bool isnot);
@@ -71,23 +67,7 @@ public:
     void GetColumnoff(string ColName);
 
     int row_offset;    
-};
 
-enum opertype
-{
-    GE,      // >=
-    LE,      // <=
-    GT,      // >
-    LT,      // <
-    ET,      // ==
-    NE,      // !=
-    LIKE,    // RV로 스트링
-    BETWEEN, // RV로 배열형식 [10,20] OR [COL1,20] --> extra
-    IN,      // RV로 배열형식 [10,20,30,40] + 크기 --> extra
-    IS,      // IS 와 IS NOT을 구분 RV는 무조건 NULL
-    ISNOT,   // IS와 구분 필요 RV는 무조건 NULL
-    NOT,     // ISNOT과 관련 없음 OPERATOR 앞에 붙는 형식 --> 혼자 들어오는 oper
-    AND,     // AND --> 혼자 들어오는 oper
-    OR,      // OR --> 혼자 들어오는 oper
+    inline const static std::string LOGTAG = "CSD Filter";
+    char msg[200];
 };
-

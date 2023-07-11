@@ -1,12 +1,11 @@
 #include "filter.h"
 
 int rownum = 0;
-// int test = 0;
-
+int current_block_count = 0;
 int saverowcount = 0;
+int totalrownum = 0;
 
-void Filter::Filtering()
-{
+void Filter::Filtering(){
     // cout << "<-----------  Filter Layer Running...  ----------->\n";
     // key_t key = 12345;
     // int msqid;
@@ -20,7 +19,7 @@ void Filter::Filtering()
     while (1)
     {
         Result scanResult = FilterQueue.wait_and_pop();//ScanResult scanResult = FilterQueue.wait_and_pop();
-        
+        current_block_count += scanResult.result_block_count;
         // string rowfilter = "Filtering Using Filter Queue : Work ID " + to_string(scanResult.work_id) + " Block ID " + to_string(scanResult.block_id) + " Row Num " + to_string(scanResult.rows) + " Filter Json " + scanResult.table_filter;
         // strcpy(msg.msg, rowfilter.c_str());
         // if (msgsnd(msqid, &msg, sizeof(msg.msg), 0) == -1)
@@ -29,7 +28,6 @@ void Filter::Filtering()
         //     exit(0);
         // }
 
-        // cout << " <------------Filter Block------------>" << endl;
         //  cout << "Filtering Using Filter Queue : Work ID " << scanResult.work_id << " Block ID " << scanResult.block_id <<" Row Num "<< scanResult.rows << " Filter Json " << scanResult.table_filter << endl;
         BlockFilter(scanResult);
         // test++;
@@ -38,79 +36,6 @@ void Filter::Filtering()
 
 int Filter::BlockFilter(Result &scanResult)
 {
-    // if(test<5){
-    //     cout << "[Block Filter Start]" << endl;
-    //     cout << "---------------filter info-----------------" << endl;
-    //     cout << "| work id: " << scanResult.work_id << " | length: " << scanResult.length
-    //          << " | rows: " << scanResult.row_count << endl;
-    //     cout << "[ " << scanResult.block_id_list.first << " : [";
-    //     list<int>::iterator iter2;
-        // for(iter2 = scanResult.block_id_list.second.begin(); iter2 != scanResult.block_id_list.second.end(); iter2++){
-        //     cout << (*iter2) << " ";
-        // }
-        // cout << "] ]" << endl;
-        // cout << "row offset: ";
-        // for(int i = 0; i < scanResult.row_count; i++){
-        //     printf("%d ",scanResult.row_offset[i]);
-        // }
-        // cout << "\nscanResult.length: " << scanResult.length << endl;
-        // cout << "\n----------------------------------------------\n";
-        // for(int i = 0; i < scanResult.length; i++){
-        //     printf("%02X ",(u_char)scanResult.data[i]);
-        // }
-        // cout << "\n------------------------------------------------\n";
-
-        // cout << scanResult.filter_info.table_filter << endl;
-
-        // cout << "\n------------------------------------------------\n";
-    // }
-    
-    // clock_t start = clock();
-    // key_t key = 12345;
-    // int msqid;
-    // message msg;
-    // msg.msg_type = 1;
-    // if ((msqid = msgget(key, IPC_CREAT | 0666)) == -1)
-    // {
-    //     printf("msgget failed\n");
-    //     exit(0);
-    // }
-    // string rowfilter = "---------- Block num : " + to_string(scanResult.block_id) + " ----------";
-    // strcpy(msg.msg, rowfilter.c_str());
-    // if (msgsnd(msqid, &msg, sizeof(msg.msg), 0) == -1)
-    // {
-    //     printf("msgsnd failed\n");
-    //     exit(0);
-    // }
-    // cout << "filter data -----------------------------------------------------" << endl;
-    // for(int i=0;i<4096;i++){
-    // 	printf("%02X",scanResult.scan_buf[i]);
-    // }
-
-    // //strcpy(msg.msg, rowfilter.c_str());
-    // if (msgsnd(msqid, &msg, sizeof(msg.msg), 0) == -1)
-    // {
-    //     printf("msgsnd failed\n");
-    //     exit(0);
-    // }
-    // rowfilter = "Success Recived Scanning";
-    // strcpy(msg.msg, rowfilter.c_str());
-    // if (msgsnd(msqid, &msg, sizeof(msg.msg), 0) == -1)
-    // {
-    //     printf("msgsnd failed\n");
-    //     exit(0);
-    // }
-    // if (count1 == 0){
-    //     count1++;
-
-    // cout << "11111111111" << endl;
-    // cout << scanResult.scan_size << endl;
-
-    // for(int i =0; i < scanResult.row_offset.size(); i++){
-    //     cout << scanResult.row_offset[i] << endl;
-    // }
-    // }
-
     char *rowbuf = scanResult.data;//char *rowbuf = scanResult.scan_buf;
 
     int filteroffset = 0;
@@ -124,11 +49,14 @@ int Filter::BlockFilter(Result &scanResult)
     unordered_map<string, int> startptr;
     unordered_map<string, int> lengthRaw;
     unordered_map<string, int> typedata;
-    column_filter = scanResult.filter_info.column_filter;
+    // column_filter = scanResult.filter_info.filtered_col;
 
-    Result filterresult(scanResult.work_id, 0, 0, scanResult.csd_name, scanResult.filter_info,
-                        scanResult.total_block_count, scanResult.result_block_count, scanResult.last_valid_block_id);
-    filterresult.column_name = scanResult.filter_info.column_filter;
+    Result filterresult(scanResult.query_id, scanResult.work_id, scanResult.csd_name, 
+        scanResult.total_block_count, scanResult.filter_info, scanResult.result_block_count);
+
+    // Result filterresult(scanResult.work_id, 0, 0, scanResult.csd_name, scanResult.filter_info,
+    //                     scanResult.total_block_count, scanResult.result_block_count, scanResult.last_valid_block_id);
+    // filterresult.column_name = scanResult.filter_info.column_filter;
     int ColNum = scanResult.filter_info.table_col.size(); //컬럼 넘버로 컬럼의 수를 의미(스니펫을 통해 받은 컬럼의 수)
     int RowNum = scanResult.row_count;             //로우 넘버로 로우의 수를 의미(스캔에서 받은 로우의 수)
 
@@ -137,12 +65,12 @@ int Filter::BlockFilter(Result &scanResult)
     vector<int> datatype = scanResult.filter_info.table_datatype;
     // vector<string> ColName = scanResult.table_col; //스니펫을 통해 받은 각 컬럼의 이름이 저장되는 배열
     vector<int> varcharlist;
-
+    // cout << "check filter" << endl;
     string str = scanResult.filter_info.table_filter;
     Document document;
     document.Parse(str.c_str());
     // cout << "~!~!~!" << scanResult.table_filter << endl;
-    Value &filterarray = document["table_filter"];
+    Value &filterarray = document["tableFilter"];
 
     bool CV, TmpV;          // CV는 현재 연산의 결과, TmpV는 이전 연산 까지의 결과
     bool Passed;            // and조건 이전이 f일 경우 연산을 생략하는 함수
@@ -159,11 +87,19 @@ int Filter::BlockFilter(Result &scanResult)
     rowfilterdata.offlen = scanResult.filter_info.table_offlen;
     rowfilterdata.startoff = scanResult.filter_info.table_offset;
     rowfilterdata.rowbuf = scanResult.data;
+    rowfilterdata.varcharlist = varcharlist;
+
+    bool substringflag;
+    string tmpsubstring;
     // makedefaultmap(ColName, startoff, offlen, datatype, ColNum, startptr, lengthRaw, typedata);
     for(int i = 0; i < ColNum; i ++){
         typedata.insert(make_pair(rowfilterdata.ColName[i],rowfilterdata.datatype[i]));
+        // cout << typedata[rowfilterdata.ColName[i]] << " " << rowfilterdata.datatype[i] << endl;
     }
     int iter = 0; //각 row의 시작점
+    // cout << RowNum << endl;
+    totalrownum += RowNum;
+    // cout << totalrownum << endl;
     for (int i = 0; i < RowNum; i++)
     {
         // saverowcount++;
@@ -248,6 +184,7 @@ int Filter::BlockFilter(Result &scanResult)
                     {
                         // cout << filterarray[j]["LV"].GetString() << endl;        
                        // 6은 스트링 --> 스트링이다는 컬럼이름이거나 char이거나 decimal이다
+                    //    cout << typedata[filterarray[j]["LV"].GetString()] << endl;
                         if (typedata[filterarray[j]["LV"].GetString()] == 3 || typedata[filterarray[j]["LV"].GetString()] == 14 || typedata[filterarray[j]["LV"].GetString()] == 8) //리틀에디안
                         {
                             // cout << typedata[filterarray[j]["LV"].GetString()] << endl;
@@ -283,7 +220,7 @@ int Filter::BlockFilter(Result &scanResult)
                         {
                             string LV = typeBig(filterarray[j]["LV"].GetString(), rowbuf);
                             string RV;
-                            if (filterarray[j]["RV"].GetType() == 5)
+                            if (filterarray[j]["RV"].IsString())
                             {
                                 if (typedata[filterarray[j]["RV"].GetString()] == 254 || typedata[filterarray[j]["RV"].GetString()] == 15)
                                 {
@@ -306,7 +243,7 @@ int Filter::BlockFilter(Result &scanResult)
                         {
                             string LV = typeDecimal(filterarray[j]["LV"].GetString(), rowbuf);
                             string RV;
-                            if (filterarray[j]["RV"].GetType() == 5)
+                            if (filterarray[j]["RV"].IsString())
                             {
                                 if (typedata[filterarray[j]["RV"].GetString()] == 246)
                                 {
@@ -401,13 +338,13 @@ int Filter::BlockFilter(Result &scanResult)
                     // }
                     // else
                     // {
-                    if (filterarray[j]["LV"].GetType() == 5)
+                    if (filterarray[j]["LV"].IsString())
                     {                                                                                                            // 6은 스트링 --> 스트링이다는 컬럼이름이거나 char이거나 decimal이다
                         if (typedata[filterarray[j]["LV"].GetString()] == 3 || typedata[filterarray[j]["LV"].GetString()] == 14 || typedata[filterarray[j]["LV"].GetString()] == 8) //리틀에디안
                         {
                             int LV = typeLittle(typedata, filterarray[j]["LV"].GetString(), rowbuf);
                             int RV;
-                            if (filterarray[j]["RV"].GetType() == 5)
+                            if (filterarray[j]["RV"].IsString())
                             {
                                 RV = typeLittle(typedata, filterarray[j]["RV"].GetString(), rowbuf);
                             }
@@ -421,7 +358,7 @@ int Filter::BlockFilter(Result &scanResult)
                         {
                             string LV = typeBig(filterarray[j]["LV"].GetString(), rowbuf);
                             string RV;
-                            if (filterarray[j]["RV"].GetType() == 5)
+                            if (filterarray[j]["RV"].IsString())
                             {
                                 RV = typeBig(filterarray[j]["RV"].GetString(), rowbuf);
                             }
@@ -437,7 +374,7 @@ int Filter::BlockFilter(Result &scanResult)
                         {
                             string LV = typeDecimal(filterarray[j]["LV"].GetString(), rowbuf);
                             string RV;
-                            if (filterarray[j]["RV"].GetType() == 5)
+                            if (filterarray[j]["RV"].IsString())
                             {
                                 if (typedata[filterarray[j]["RV"].GetString()] == 246)
                                 {
@@ -517,13 +454,13 @@ int Filter::BlockFilter(Result &scanResult)
                     // }
                     // else
                     // {
-                    if (filterarray[j]["LV"].GetType() == 5)
+                    if (filterarray[j]["LV"].IsString())
                     {                                                                                                            // 6은 스트링 --> 스트링이다는 컬럼이름이거나 char이거나 decimal이다
                         if (typedata[filterarray[j]["LV"].GetString()] == 3 || typedata[filterarray[j]["LV"].GetString()] == 14 || typedata[filterarray[j]["LV"].GetString()] == 8) //리틀에디안
                         {
                             int LV = typeLittle(typedata, filterarray[j]["LV"].GetString(), rowbuf);
                             int RV;
-                            if (filterarray[j]["RV"].GetType() == 5)
+                            if (filterarray[j]["RV"].IsString())
                             {
                                 RV = typeLittle(typedata, filterarray[j]["RV"].GetString(), rowbuf);
                             }
@@ -537,7 +474,7 @@ int Filter::BlockFilter(Result &scanResult)
                         {
                             string LV = typeBig(filterarray[j]["LV"].GetString(), rowbuf);
                             string RV;
-                            if (filterarray[j]["RV"].GetType() == 5)
+                            if (filterarray[j]["RV"].IsString())
                             {
                                 RV = typeBig(filterarray[j]["RV"].GetString(), rowbuf);
                             }
@@ -553,7 +490,7 @@ int Filter::BlockFilter(Result &scanResult)
                         {
                             string LV = typeDecimal(filterarray[j]["LV"].GetString(), rowbuf);
                             string RV;
-                            if (filterarray[j]["RV"].GetType() == 5)
+                            if (filterarray[j]["RV"].IsString())
                             {
                                 if (typedata[filterarray[j]["RV"].GetString()] == 246)
                                 {
@@ -668,7 +605,7 @@ int Filter::BlockFilter(Result &scanResult)
                             // cout << typedata[filterarray[j]["LV"].GetString()] << endl;
                             int LV = typeLittle(typedata, filterarray[j]["LV"].GetString(), rowbuf);
                             int RV;
-                            if (filterarray[j]["RV"].GetType() == 5)
+                            if (filterarray[j]["RV"].IsString())
                             {
                                 // cout << typedata[filterarray[j]["RV"].GetString()] << endl;
                                 RV = typeLittle(typedata, filterarray[j]["RV"].GetString(), rowbuf);
@@ -697,7 +634,7 @@ int Filter::BlockFilter(Result &scanResult)
                         {
                             string LV = typeBig(filterarray[j]["LV"].GetString(), rowbuf);
                             string RV;
-                            if (filterarray[j]["RV"].GetType() == 5)
+                            if (filterarray[j]["RV"].IsString())
                             {
                                 RV = typeBig(filterarray[j]["RV"].GetString(), rowbuf);
                             }
@@ -713,7 +650,7 @@ int Filter::BlockFilter(Result &scanResult)
                         {
                             string LV = typeDecimal(filterarray[j]["LV"].GetString(), rowbuf);
                             string RV;
-                            if (filterarray[j]["RV"].GetType() == 5)
+                            if (filterarray[j]["RV"].IsString())
                             {
                                 if (typedata[filterarray[j]["RV"].GetString()] == 246)
                                 {
@@ -807,13 +744,15 @@ int Filter::BlockFilter(Result &scanResult)
                     // }
                     // else
                     // {
-                    if (filterarray[j]["LV"].GetType() == 5)
+                    if (filterarray[j]["LV"].IsString())
                     {                                                                                                            // 6은 스트링 --> 스트링이다는 컬럼이름이거나 char이거나 decimal이다
                         if (typedata[filterarray[j]["LV"].GetString()] == 3 || typedata[filterarray[j]["LV"].GetString()] == 14 || typedata[filterarray[j]["LV"].GetString()] == 8) //리틀에디안
                         {
                             int LV = typeLittle(typedata, filterarray[j]["LV"].GetString(), rowbuf);
+                            // cout << filterarray[j]["LV"].GetString() << endl;
+                            // cout << LV << endl;
                             int RV;
-                            if (filterarray[j]["RV"].GetType() == 5)
+                            if (filterarray[j]["RV"].IsString())
                             {
                                 RV = typeLittle(typedata, filterarray[j]["RV"].GetString(), rowbuf);
                             }
@@ -827,14 +766,19 @@ int Filter::BlockFilter(Result &scanResult)
                         {
                             string LV = typeBig(filterarray[j]["LV"].GetString(), rowbuf);
                             string RV;
-                            if (filterarray[j]["RV"].GetType() == 5)
-                            {
-                                RV = typeBig(filterarray[j]["RV"].GetString(), rowbuf);
-                            }
-                            else
-                            {
+                            if(filterarray[j]["RV"].IsString()){
                                 RV = filterarray[j]["RV"].GetString();
-                                RV = RV.substr(1);
+                                if (RV[0] != '+')
+                                {
+                                    RV = typeBig(RV, rowbuf);
+                                    
+                                }
+                                else
+                                {
+                                    RV = RV.substr(1);
+                                }
+                            }else{
+
                             }
                             compareET(LV, RV, CV, TmpV, canSaved, isnot);
                             // cout << "type big" << endl;
@@ -843,7 +787,7 @@ int Filter::BlockFilter(Result &scanResult)
                         {
                             string LV = typeDecimal(filterarray[j]["LV"].GetString(), rowbuf);
                             string RV;
-                            if (filterarray[j]["RV"].GetType() == 5)
+                            if (filterarray[j]["RV"].IsString())
                             {
                                 if (typedata[filterarray[j]["RV"].GetString()] == 246)
                                 {
@@ -898,13 +842,13 @@ int Filter::BlockFilter(Result &scanResult)
                     // }
                     // else
                     // {
-                    if (filterarray[j]["LV"].GetType() == 5)
+                    if (filterarray[j]["LV"].IsString())
                     {                                                                                                            // 6은 스트링 --> 스트링이다는 컬럼이름이거나 char이거나 decimal이다
                         if (typedata[filterarray[j]["LV"].GetString()] == 3 || typedata[filterarray[j]["LV"].GetString()] == 14 || typedata[filterarray[j]["LV"].GetString()] == 8) //리틀에디안
                         {
                             int LV = typeLittle(typedata, filterarray[j]["LV"].GetString(), rowbuf);
                             int RV;
-                            if (filterarray[j]["RV"].GetType() == 5)
+                            if (filterarray[j]["RV"].IsString())
                             {
                                 RV = typeLittle(typedata, filterarray[j]["RV"].GetString(), rowbuf);
                             }
@@ -918,23 +862,40 @@ int Filter::BlockFilter(Result &scanResult)
                         {
                             string LV = typeBig(filterarray[j]["LV"].GetString(), rowbuf);
                             string RV;
-                            if (filterarray[j]["RV"].GetType() == 5)
+                            // if (filterarray[j]["RV"].IsString())
+                            // {
+                            //     RV = typeBig(filterarray[j]["RV"].GetString(), rowbuf);
+                            // }
+                            // else
+                            // {
+                            //     RV = filterarray[j]["RV"].GetString();
+                            //     RV = RV.substr(1);
+                            // }
+                            if (filterarray[j]["RV"].IsString())
                             {
-                                RV = typeBig(filterarray[j]["RV"].GetString(), rowbuf);
+                                if (typedata[filterarray[j]["RV"].GetString()] == 246)
+                                {
+                                    RV = typeDecimal(filterarray[j]["RV"].GetString(), rowbuf);
+                                }
+                                else
+                                {
+                                    RV = filterarray[j]["RV"].GetString();
+                                    RV = RV.substr(1);
+                                }
                             }
                             else
-                            {
-                                RV = filterarray[j]["RV"].GetString();
-                                RV = RV.substr(1);
+                            { //여기가 int를 데시멀로 바꾸는 부분
+                                int tmpint;
+                                tmpint = filterarray[j]["RV"].GetInt();
+                                RV = ItoDec(tmpint);
                             }
                             compareNE(LV, RV, CV, TmpV, canSaved, isnot);
-                            // cout << "type big" << endl;
                         }
                         else if (typedata[filterarray[j]["LV"].GetString()] == 246) //예외 Decimal일때
                         {
                             string LV = typeDecimal(filterarray[j]["LV"].GetString(), rowbuf);
                             string RV;
-                            if (filterarray[j]["RV"].GetType() == 5)
+                            if (filterarray[j]["RV"].IsString())
                             {
                                 if (typedata[filterarray[j]["RV"].GetString()] == 246)
                                 {
@@ -1041,10 +1002,9 @@ int Filter::BlockFilter(Result &scanResult)
                         RV = RV.substr(1);
                     }
                     CV = LikeSubString_v2(LV, RV);
-                    // cout << CV << endl;
-                    // }
-                    // cout << "isnot print :" << isnot << " value : " << LV << endl;
-                    // cout << isnot << endl;
+                    if(CV){
+                        canSaved = true;
+                    }
                     if (isnot)
                     {
                         if (CV)
@@ -1085,7 +1045,7 @@ int Filter::BlockFilter(Result &scanResult)
                     //  cout << filterarray[j]["LV"].GetString() << endl;
                     // cout << j << endl;
                     //  cout << filterarray[j]["LV"].GetType() << endl;
-                    if (filterarray[j]["LV"].GetType() == 5)
+                    if (filterarray[j]["LV"].IsString())
                     {
                         // cout << "type : 5" << endl;
                         // string filtersring = filterarray[j]["LV"].GetString();
@@ -1098,7 +1058,7 @@ int Filter::BlockFilter(Result &scanResult)
                             int RV1;
                             for (int k = 0; k < filterarray[j]["EXTRA"].Size(); k++)
                             {
-                                if (filterarray[j]["EXTRA"][k].GetType() == 5)
+                                if (filterarray[j]["EXTRA"][k].IsString())
                                 { //컬럼명 또는 스트링이다. --> 스트링을 int로 변경, 만약 변경 불가한 문자의 경우 ex. 'asd' 예외처리해서 걍 f로 반환
                                     if (typedata[filterarray[j]["EXTRA"][k].GetString()] == 3 || typedata[filterarray[j]["EXTRA"][k].GetString()] == 14)
                                     {
@@ -1139,7 +1099,7 @@ int Filter::BlockFilter(Result &scanResult)
                                         }
                                     }
                                 }
-                                else if (filterarray[j]["EXTRA"][k].GetType() == 6) // int,float 타입
+                                else if (filterarray[j]["EXTRA"][k].IsInt() || filterarray[j]["EXTRA"][k].IsDouble() || filterarray[j]["EXTRA"][k].IsFloat()) // int,float 타입
                                 {                                                   // int, float, double
                                     if (filterarray[j]["EXTRA"][k].IsInt())
                                     {
@@ -1168,7 +1128,7 @@ int Filter::BlockFilter(Result &scanResult)
                             string RV1;
                             for (int k = 0; k < filterarray[j]["EXTRA"].Size(); k++)
                             {
-                                if (filterarray[j]["EXTRA"][k].GetType() == 5)
+                                if (filterarray[j]["EXTRA"][k].IsString())
                                 { //컬럼명 또는 스트링이다. --> 스트링이다 == float가 decimal로 800000000으로 들어온다
                                     if (typedata[filterarray[j]["EXTRA"][k].GetString()] == 3 || typedata[filterarray[j]["EXTRA"][k].GetString()] == 14)
                                     {
@@ -1211,7 +1171,7 @@ int Filter::BlockFilter(Result &scanResult)
                                         }
                                     }
                                 }
-                                else if (filterarray[j]["EXTRA"][k].GetType() == 6) // int,float 타입 이 부분도 수정필요 string과 int의 비교
+                                else if (filterarray[j]["EXTRA"][k].IsInt() || filterarray[j]["EXTRA"][k].IsDouble() || filterarray[j]["EXTRA"][k].IsFloat()) // int,float 타입 이 부분도 수정필요 string과 int의 비교
                                 {                                                   // int, float, double
                                     int tmpint;
                                     if (filterarray[j]["EXTRA"][k].IsInt())
@@ -1248,9 +1208,10 @@ int Filter::BlockFilter(Result &scanResult)
                             // cout << LV << endl;
                             for (int k = 0; k < filterarray[j]["EXTRA"].Size(); k++)
                             {
-                                // cout << filterarray[j]["EXTRA"][k].GetType() << endl;
-                                if (filterarray[j]["EXTRA"][k].GetType() == 5)
+                                // cout << filterarray[j]["EXTRA"][k].GetString() << endl;
+                                if (filterarray[j]["EXTRA"][k].IsString())
                                 { //컬럼명 또는 스트링이다. --> 스트링이다 == float가 decimal로 800000000으로 들어온다
+                                    // cout << typedata[filterarray[j]["EXTRA"][k].GetString()] << endl;
                                     if (typedata[filterarray[j]["EXTRA"][k].GetString()] == 3 || typedata[filterarray[j]["EXTRA"][k].GetString()] == 14)
                                     {
                                         if (k == 0)
@@ -1293,7 +1254,7 @@ int Filter::BlockFilter(Result &scanResult)
                                     }
                                     // cout << "LV : " << LV << "RV : " << RV << "RV1 : " << RV1 << endl;
                                 }
-                                else if (filterarray[j]["EXTRA"][k].GetType() == 6) // int,float 타입 이 부분도 수정필요 string과 int의 비교
+                                else if (filterarray[j]["EXTRA"][k].IsInt() || filterarray[j]["EXTRA"][k].IsDouble() || filterarray[j]["EXTRA"][k].IsFloat()) // int,float 타입 이 부분도 수정필요 string과 int의 비교
                                 {                                                   // int, float, double
                                     int tmpint;
                                     if (filterarray[j]["EXTRA"][k].IsInt())
@@ -1355,6 +1316,7 @@ int Filter::BlockFilter(Result &scanResult)
                         // compareNE(LV, RV, CV, TmpV, canSaved, isnot);
                     }
                     // }
+                    canSaved = CV;
                     if (isnot)
                     {
                         if (CV)
@@ -1379,41 +1341,62 @@ int Filter::BlockFilter(Result &scanResult)
                          // }
                          // else
                          // {
-                    if (filterarray[j]["LV"].GetType() == 5)
-                    {                                                                                                            // 6은 스트링 --> 스트링이다는 컬럼이름이거나 char이거나 decimal이다
-                        if (typedata[filterarray[j]["LV"].GetString()] == 3 || typedata[filterarray[j]["LV"].GetString()] == 14 || typedata[filterarray[j]["LV"].GetString()] == 8) //리틀에디안
-                        {
-                            int LV = typeLittle(typedata, filterarray[j]["LV"].GetString(), rowbuf);
-                            Value &Extra = filterarray[j]["EXTRA"];
-                            CV = InOperator(LV, Extra, typedata, rowbuf);
-                        }
-                        else if (typedata[filterarray[j]["LV"].GetString()] == 254 || typedata[filterarray[j]["LV"].GetString()] == 15) //빅에디안
-                        {
-                            string LV = typeBig(filterarray[j]["LV"].GetString(), rowbuf);
-                            Value &Extra = filterarray[j]["EXTRA"];
-                            // Extra = filterarray[j]["EXTRA"].GetArray();
-                            CV = InOperator(LV, Extra, typedata, rowbuf);
-                            // cout << "type big" << endl;
-                        }
-                        else if (typedata[filterarray[j]["LV"].GetString()] == 246) //예외 Decimal일때
-                        {
-                            string LV = typeDecimal(filterarray[j]["LV"].GetString(), rowbuf);
-                            Value &Extra = filterarray[j]["EXTRA"];
-                            CV = InOperator(LV, Extra, typedata, rowbuf);
+                    if(substringflag){
+                        Value &Extra = filterarray[j]["EXTRA"];
+                        CV = InOperator(tmpsubstring, Extra, typedata, rowbuf);
+                        substringflag = false;
+                    }else{
+
+                        if (filterarray[j]["LV"].IsString())
+                        {                                                                                                            // 6은 스트링 --> 스트링이다는 컬럼이름이거나 char이거나 decimal이다
+                            if (typedata[filterarray[j]["LV"].GetString()] == 3 || typedata[filterarray[j]["LV"].GetString()] == 14 || typedata[filterarray[j]["LV"].GetString()] == 8) //리틀에디안
+                            {
+                                int LV = typeLittle(typedata, filterarray[j]["LV"].GetString(), rowbuf);
+                                Value &Extra = filterarray[j]["EXTRA"];
+                                CV = InOperator(LV, Extra, typedata, rowbuf);
+                            }
+                            else if (typedata[filterarray[j]["LV"].GetString()] == 254 || typedata[filterarray[j]["LV"].GetString()] == 15) //빅에디안
+                            {
+                                string LV = typeBig(filterarray[j]["LV"].GetString(), rowbuf);
+                                Value &Extra = filterarray[j]["EXTRA"];
+                                // Extra = filterarray[j]["EXTRA"].GetArray();
+                                CV = InOperator(LV, Extra, typedata, rowbuf);
+                                // cout << "type big" << endl;
+                            }
+                            else if (typedata[filterarray[j]["LV"].GetString()] == 246) //예외 Decimal일때
+                            {
+                                string LV = typeDecimal(filterarray[j]["LV"].GetString(), rowbuf);
+                                Value &Extra = filterarray[j]["EXTRA"];
+                                CV = InOperator(LV, Extra, typedata, rowbuf);
+                            }
+                            else
+                            {
+                                string LV = filterarray[j]["LV"].GetString();
+                                LV = LV.substr(1);
+                                Value &Extra = filterarray[j]["EXTRA"];
+                                CV = InOperator(LV, Extra, typedata, rowbuf);
+                            }
                         }
                         else
-                        {
-                            string LV = filterarray[j]["LV"].GetString();
-                            LV = LV.substr(1);
+                        { // lv는 인트타입의 상수
+                            int LV = filterarray[j]["LV"].GetInt();
                             Value &Extra = filterarray[j]["EXTRA"];
                             CV = InOperator(LV, Extra, typedata, rowbuf);
                         }
                     }
-                    else
-                    { // lv는 인트타입의 상수
-                        int LV = filterarray[j]["LV"].GetInt();
-                        Value &Extra = filterarray[j]["EXTRA"];
-                        CV = InOperator(LV, Extra, typedata, rowbuf);
+                    canSaved = CV;
+                    if (isnot)
+                    {
+                        if (CV)
+                        {
+                            CV = false;
+                            canSaved = false;
+                        }
+                        else
+                        {
+                            CV = true;
+                            canSaved = true;
+                        }
                     }
                     // }
                     break;
@@ -1472,6 +1455,46 @@ int Filter::BlockFilter(Result &scanResult)
                         Passed = false;
                     }
                     /* code */
+                    break;
+                case SUBSTRING:
+                    //1. LV에서 Value를 읽는다.(아마 대부분 column일것)
+                    //2. RV에서 Value를 읽고, LV의 SUBSTRING을 구한다.
+                    //3. LV의 SUBSTRING을 저장한다.
+                    //4. SUBSTRING FLAG를 On한다.
+                    // 이거 쓰는거 보고싶으면 22번 쿼리 동작시키면 됨
+                    int subFrom;
+                    int subFor;
+                        if (typedata[filterarray[j]["LV"].GetString()] == 254 || typedata[filterarray[j]["LV"].GetString()] == 15) //빅에디안
+                        {
+                            string LV = typeBig(filterarray[j]["LV"].GetString(), rowbuf);
+                            string tmps;
+                            string RV;
+                            tmps = filterarray[j]["EXTRA"][0].GetString();
+                            RV = tmps.substr(1);
+                            subFrom = atoi(RV.c_str()) - 1;
+                            tmps = filterarray[j]["EXTRA"][1].GetString();
+                            RV = tmps.substr(1);
+                            subFor = atoi(RV.c_str());
+                            tmpsubstring = LV.substr(subFrom,subFor);
+                            // Value &Extra = filterarray[j]["EXTRA"];
+                            // // Extra = filterarray[j]["EXTRA"].GetArray();
+                            // CV = InOperator(LV, Extra, typedata, rowbuf);
+                            // cout << "type big" << endl;
+                        }
+                        else if (typedata[filterarray[j]["LV"].GetString()] == 246) //예외 Decimal일때
+                        {
+                            string LV = typeDecimal(filterarray[j]["LV"].GetString(), rowbuf);
+                            // Value &Extra = filterarray[j]["EXTRA"];
+                            // CV = InOperator(LV, Extra, typedata, rowbuf);
+                        }
+                        else
+                        {
+                            string LV = filterarray[j]["LV"].GetString();
+                            LV = LV.substr(1);
+                            // Value &Extra = filterarray[j]["EXTRA"];
+                            // CV = InOperator(LV, Extra, typedata, rowbuf);
+                        }
+                        substringflag = true;
                     break;
                 default:
                     cout << "error this is no default" << endl;
@@ -1566,7 +1589,8 @@ int Filter::BlockFilter(Result &scanResult)
     // cout << "-------------------------------------------------------" << endl;
 
     sendfilterresult(filterresult);
-    // cout << rownum << endl;
+    saverowcount += rownum;
+    // cout << saverowcount << endl;
     return 0;
 }
 
@@ -1607,6 +1631,12 @@ void Filter::sendfilterresult(Result &filterresult_)
     //     printf("%02X", (u_char)filterresult_.data[i]);
     // }
     // cout << "------------------------------------------------\n";
+    
+    memset(msg, '\0', sizeof(msg));
+    float temp_size = float(filterresult_.length) / float(1024);
+    // printf("[CSD Filter] Filtering Data ... \n");
+    // printf("[CSD Filter] Filtering Data ... (Block : %d/%d)\n",current_block_count,filterresult_.total_block_count);    sprintf(msg,"[CSD Filter] Filtering Data ... (Filtered Size : %.1fK)\n",temp_size);
+    KETILOG::DEBUGLOG(LOGTAG, msg);
     MergeQueue.push_work(filterresult_);
 }
 
@@ -1773,6 +1803,7 @@ bool Filter::InOperator(string lv, Value &rv, unordered_map<string, int> typedat
         {
             RV = ItoDec(rv[i].GetInt());
         }
+        lv = rtrim_(lv);
         if (lv == RV)
         {
             return true;
@@ -1910,21 +1941,20 @@ void Filter::SavedRow(char *row, int startoff, Result &filterresult, int nowleng
     int newlen = 0;
     vector<int> column_startptr;
 
-    for(int i = 0; i < column_filter.size(); i++){
-        GetColumnoff(column_filter[i]);
-        memcpy(filterresult.data+filterresult.length, row + newstartptr[column_filter[i]], newlengthraw[column_filter[i]]);
-        newlen += newlengthraw[column_filter[i]];
-        filterresult.length += newlen;
-        column_startptr.push_back(newstartptr[column_filter[i]]);
-    }
-    filterresult.row_column_offset.push_back(column_startptr);
+    //(수정) Filter의 Column filtering 삭제
+    // for(int i = 0; i < column_filter.size(); i++){
+    //     GetColumnoff(column_filter[i]);
+    //     memcpy(filterresult.data+filterresult.length, row + newstartptr[column_filter[i]], newlengthraw[column_filter[i]]);
+    //     newlen += newlengthraw[column_filter[i]];
+    //     filterresult.length += newlen;
+    //     column_startptr.push_back(newstartptr[column_filter[i]]);
+    // }
+    // filterresult.row_column_offset.push_back(column_startptr);
 
     // filterresult.length += newlen;
 
-    // memcpy(filterresult.data+filterresult.length, row, nowlength);
-    // filterresult.length += nowlength;
-
-
+    memcpy(filterresult.data+filterresult.length, row, nowlength);
+    filterresult.length += nowlength;
 
     // for (int i = 0; i < nowlength; i++)
     // {
@@ -1970,7 +2000,7 @@ vector<string> Filter::split(string str, char Delimiter)
     return result;
 }
 
-bool Filter::isvarc(vector<int> datatype, int ColNum, vector<int> varcharlist)
+bool Filter::isvarc(vector<int> datatype, int ColNum, vector<int>& varcharlist)
 {
     int isvarchar = 0;
     for (int i = 0; i < ColNum; i++) // varchar 확인
@@ -2373,12 +2403,10 @@ void Filter::compareLT(int LV, int RV, bool &CV, bool &TmpV, bool &canSaved, boo
         }
     }
 }
-void Filter::compareET(string LV, string RV, bool &CV, bool &TmpV, bool &canSaved, bool isnot)
-{
-
+void Filter::compareET(string LV, string RV, bool &CV, bool &TmpV, bool &canSaved, bool isnot){
+    LV = trim_(LV); 
     if (LV == RV)
     {
-        // cout << "same" << endl;
         if (TmpV == true)
         {
             CV = true;
@@ -2448,7 +2476,7 @@ void Filter::compareET(int LV, int RV, bool &CV, bool &TmpV, bool &canSaved, boo
 
 void Filter::compareNE(string LV, string RV, bool &CV, bool &TmpV, bool &canSaved, bool isnot)
 {
-
+    LV = rtrim_(LV);
     if (LV != RV)
     {
         if (TmpV == true)
@@ -2522,7 +2550,6 @@ int Filter::typeLittle(unordered_map<string, int> typedata, string colname, char
     // cout << "tttteeessssttttt  " << typedata[colname] << endl;
     if (typedata[colname] == 14)
     { // date
-        // cout << 1 << endl;
         int *tmphex;
         char temphexbuf[4];
         //  = new char[4];
@@ -2591,16 +2618,21 @@ int Filter::typeLittle(unordered_map<string, int> typedata, string colname, char
         GetColumnoff(colname);
         // }
         // cout << "date size : " << newlengthraw[colname] << endl;
+        // cout << newstartptr[colname] << endl;
         for (int k = 0; k < newlengthraw[colname]; k++)
         {
+            // cout << rowbuf[newstartptr[colname] + k] << endl;
+            // printf("%02X ",(u_char)rowbuf[newstartptr[colname] + k]);
             intbuf[k] = rowbuf[newstartptr[colname] + k];
         }
+        // cout << endl;
         intbuff = (int *)intbuf;
         retint = intbuff[0];
         // delete[] intbuf;
         //  cout << intbuff[0] << endl;
         return retint;
     }else{
+        cout << "error no join" << endl;
         string tmpstring = joinmap[colname];
         return stoi(tmpstring);
     }
@@ -2618,8 +2650,7 @@ string Filter::typeBig(string colname, char *rowbuf)
     GetColumnoff(colname);
     // }
     string tmpstring = "";
-    for (int k = 0; k < newlengthraw[colname]; k++)
-    {
+    for (int k = 0; k < newlengthraw[colname]; k++){
         tmpstring = tmpstring + (char)rowbuf[newstartptr[colname] + k];
     }
     return tmpstring;
@@ -2677,16 +2708,23 @@ void Filter::GetColumnoff(string colname){
     int offlen = 0;
     int tmpcount = rowfilterdata.offsetcount;
     // cout << rowfilterdata.offsetcount << " " << rowfilterdata.ColIndexmap[colname] << endl;
+    // bool varcharflag = 0;
+    bool varcharflag = 0;
     for(int i = rowfilterdata.offsetcount; i < rowfilterdata.ColIndexmap[colname] + 1; i++){
-        bool varcharflag = 0;
         if(i == 0){
             startoff = rowfilterdata.rowoffset + rowfilterdata.startoff[i];
-        }else if (varcharflag == 0){
-            startoff = rowfilterdata.startoff[i] + rowfilterdata.rowoffset;
-        }else{
+            // cout << rowfilterdata.rowoffset << endl;
+        }
+        // else if (varcharflag == 0){
+        //     startoff = rowfilterdata.startoff[i] + rowfilterdata.rowoffset;
+        // }
+        else{
             startoff = newstartptr[rowfilterdata.ColName[i-1]] + newlengthraw[rowfilterdata.ColName[i-1]];
         }
+        varcharflag = 0;
         // cout << startoff << endl;
+        // cout << startoff << endl;
+        // cout << rowfilterdata.varcharlist.size() << endl;
         for(int j = 0; j < rowfilterdata.varcharlist.size(); j++){
             //내가 varchar 타입일때
             // cout << rowfilterdata.varcharlist[j] << endl;
@@ -2695,6 +2733,7 @@ void Filter::GetColumnoff(string colname){
                 if (rowfilterdata.offlen[i] < 256){
                     // cout <<"varchar row len : " << (int)rowfilterdata.rowbuf[startoff] << endl;
                     offlen = (int)rowfilterdata.rowbuf[startoff];
+                    // cout << offlen << endl;
                     newstartptr.insert(make_pair(rowfilterdata.ColName[i],startoff + 1));
                     newlengthraw.insert(make_pair(rowfilterdata.ColName[i],offlen));
                 }else{
