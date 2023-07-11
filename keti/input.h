@@ -1,302 +1,158 @@
-#include <iostream>
-#include <fcntl.h>
-#include <stdio.h>
-#include <unistd.h>
-#include <mutex>
-#include <queue>
-#include <list>
-#include <algorithm>
-#include <condition_variable>
-#include <unordered_map>
-#include <sys/socket.h>
-#include <netinet/in.h> 
-#include <arpa/inet.h>
-#include <stack>
-#include "rapidjson/document.h"
-#include "rapidjson/stringbuffer.h"
-#include "rapidjson/writer.h"
-#include "rapidjson/prettywriter.h"
+#pragma once
 
-#include "rocksdb/sst_file_reader.h"
+#include "scan.h"
 
 using namespace rapidjson;
-using namespace std;
-using namespace ROCKSDB_NAMESPACE;
-
-#define NUM_OF_BLOCKS 15
-#define BUFF_SIZE (NUM_OF_BLOCKS * 4096)
-#define INPUT_IF_PORT 8080
-#define PACKET_SIZE 36
-
-struct Snippet;
-template <typename T>
-class WorkQueue;
 
 extern WorkQueue<Snippet> ScanQueue;
 
-typedef struct Data{
-  int type;
-  vector<string> str_col;
-  vector<int> int_col;
-  vector<float> flt_col;
-}Data;
-
-/*     
-                            Scan Type
-  +-----------------------+--------------------------------------+
-  | Full_Scan_Filter   | full table scan / only scan (no filter) |
-  | Full_Scan          | full table scan / scan and filter       |
-  | Index_Scan_Filter  | index pk scan   / only scan (no filter) |
-  | Index_Scan         | index pk scan   / scan and filter       |
-  +------------------------+-------------------------------------+
-*/
-
-enum Scan_Type{
-  Full_Scan_Filter,
-  Full_Scan,
-  Index_Scan_Filter,
-  Index_Scan
-};
-
-struct PrimaryKey{
-  string key_name;
-  int key_type;
-  int key_length;
-};
+void calculForReturnData(Snippet &snippet);//임시 추가 -> 나중엔 merge_manager에서 계산해서 넣어야함
 
 class Input{
     public:
-        Input(){}
-        void InputSnippet();
-        void EnQueueScan(Snippet snippet_);
+      inline const static std::string LOGTAG = "CSD Input";
+
+      Input(){}
+      void InputSnippet();
 };
 
-struct Snippet{
-    int work_id;
-    int query_id;
-    string csd_name;
-    string table_name;
-    list<BlockInfo> block_info_list;
-    vector<string> table_col;
-    string table_filter;
-    vector<int> table_offset;
-    vector<int> table_offlen;
-    vector<int> table_datatype;
-    int total_block_count;
-    unordered_map<string, int> colindexmap;
-    list<PrimaryKey> primary_key_list;
-    uint64_t kNumInternalBytes;
-    int primary_length;
-    char index_num[4];
-    string index_pk;
-    int scan_type;
-    vector<string> column_filter;
-    vector<vector<string>> column_projection;
-    vector<string> groupby_col;
-    vector<pair<int,string>> orderby_col;
+void Input::InputSnippet(){
+        int server_fd;
+        int client_fd;
+        int opt = 1;
+        struct sockaddr_in serv_addr; // 소켓주소
+        struct sockaddr_in client_addr;
+        socklen_t addrlen = sizeof(struct sockaddr_in);
 
-    Snippet(const char* json_){
-        // cout << "\n[Parsing Snippet]" << endl;	
-        bool index_scan = false;
-        bool only_scan = true;
+        if ((server_fd = socket(AF_INET, SOCK_STREAM, 0)) == 0){
+              perror("socket failed");
+              exit(EXIT_FAILURE);
+          }
 
-        total_block_count = 0;
-        Document document;
-        document.Parse(json_);
+        if (setsockopt(server_fd, SOL_SOCKET, SO_REUSEADDR | SO_REUSEPORT, &opt, sizeof(opt))){
+              perror("setsockopt");
+              exit(EXIT_FAILURE);
+          }
         
-        query_id = document["queryID"].GetInt();
-        work_id = document["workID"].GetInt();
-        csd_name = document["CSDName"].GetString();
-        table_name = document["tableName"].GetString();
+        memset(&serv_addr, 0, sizeof(serv_addr));
+        serv_addr.sin_family = AF_INET;
+        serv_addr.sin_addr.s_addr = INADDR_ANY;
+        serv_addr.sin_port = htons(INPUT_IF_PORT); // port
 
-        Value &blockInfo = document["blockInfo"];
-        int block_id_ = blockInfo["blockID"].GetInt(); 
-        int block_list_size = blockInfo["blockList"].Size();
+        if (bind(server_fd, (struct sockaddr*)&serv_addr, sizeof(serv_addr)) < 0){
+          perror("bind");
+          exit(EXIT_FAILURE);
+        } // 소켓을 지정 주소와 포트에 바인딩
 
-        int index_num_ = document["indexNum"].GetInt();
-        union{
-          int value;
-          char byte[4];
-        }inum;
-        inum.value = index_num_;
-        memcpy(index_num,inum.byte,4);
+        if (listen(server_fd, 3) < 0){
+          perror("listen");
+          exit(EXIT_FAILURE);
+        } // 리스닝
 
-        for(int i = 0; i < document["columnFiltering"].Size(); i++){
-          column_filter.push_back(document["columnFiltering"][i].GetString());
-        }
-
-        for(int i = 0; i < document["columnProjection"].Size(); i++){
-          for(int j = 0; j < document["columnProjection"][i].Size(); j++){
-            column_projection[i].push_back(document["columnProjection"][i][j].GetString());
+        while(1){
+          if ((client_fd = accept(server_fd, (struct sockaddr*)&client_addr, (socklen_t*)&addrlen)) < 0){
+            perror("accept");
+                exit(EXIT_FAILURE);
           }
-        }
 
-        if(document.HasMember("groupBy")){
-          for(int i = 0; i < document["groupBy"].Size(); i++){
-            groupby_col.push_back(document["groupBy"][i].GetString());
+          std::string json;
+          char buffer[BUFF_SIZE] = {0};
+          
+          size_t length;
+          int temp = read( client_fd , &length, sizeof(length));
+          if(temp == 0){
+            cout << "read error" << endl;
           }
-        }else{
-          groupby_col.clear();
-        }
 
-        if(document.HasMember("orderBy")){
-          for(int i = 0; i < document["orderBy"].Size(); i++){
-            string op1 = document["orderBy"][i][0].GetString();
-            string op2 = document["orderBy"][i][1].GetString();
-            orderby_col.push_back(pair<int,string>(stoi(op1),op2));
-          }
-        }else{
-          orderby_col.clear();
-        }
-
-        int primary_count = document["pk_len"].GetInt();
-
-        if(primary_count == 0){
-          kNumInternalBytes = 8;
-        }else{
-          kNumInternalBytes = 0;
-        }
-
-        uint64_t block_offset_, block_length_;
-        
-        //block list 정보 저장
-        for(int i = 0; i<block_list_size; i++){
-            block_offset_ = blockInfo["BlockList"][i]["Offset"].GetInt64();
-            for(int j = 0; j < blockInfo["BlockList"][i]["Length"].Size(); j++){
-                block_length_ = blockInfo["BlockList"][i]["Length"][j].GetInt64();
-                BlockInfo newBlock(block_id_, block_offset_, block_length_);
-                block_info_list.push_back(newBlock);
-                block_offset_ = block_offset_ + block_length_;
-                block_id_++;
-                total_block_count++;
+          int numread;
+          while(1) {
+            if ((numread = read( client_fd , buffer, BUFF_SIZE - 1)) == -1) {
+              cout << "read error" << endl;
+              perror("read");
+              exit(1);
             }
-        }   
+            length -= numread;
+              buffer[numread] = '\0';
+            json += buffer;
 
-        primary_key_list.clear();
-        primary_length = 0;
+              if (length == 0)
+              break;
+          }
 
-        //테이블 스키마 정보 저장
-        Value &table_col_ = document["table_col"];
-        for(int j=0; j<table_col_.Size(); j++){
-            string col = table_col_[j].GetString();
-            int startoff = document["table_offset"][j].GetInt();
-            int offlen = document["table_offlen"][j].GetInt();
-            int datatype = document["table_datatype"][j].GetInt();
-            table_col.push_back(col);
-            table_offset.push_back(startoff);
-            table_offlen.push_back(offlen);
-            table_datatype.push_back(datatype);
-            colindexmap.insert({col,j});
-            
-            //pk 정보 저장
-            if(j<primary_count){
-              string key_name_ = document["table_col"][j].GetString();
-              int key_type_ = document["table_datatype"][j].GetInt();
-              int key_length_ = document["table_offlen"][j].GetInt();
-              primary_key_list.push_back(PrimaryKey{key_name_,key_type_,key_length_});
-              primary_length += key_length_;
+          if(KETILOG::IsLogLevelUnder(TRACE)){
+            cout << "*******************Snippet JSON*****************" << endl;
+            cout << json.c_str() << endl;
+            cout << "************************************************" << endl;
+          }
+
+          Snippet parsedSnippet(json.c_str());
+          calculForReturnData(parsedSnippet);
+
+          //로그
+          char msg[200];
+          memset(msg, '\0', sizeof(msg));
+          sprintf(msg,"Receive Snippet {ID : %d-%d} from Storage Engine Instance\n",parsedSnippet.query_id, parsedSnippet.work_id);
+          KETILOG::INFOLOG(LOGTAG, msg);
+
+          // printf("[CSD Input Interface] Receive Snippet {ID : %d-%d} from Storage Engine Instance\n",parsedSnippet.query_id, parsedSnippet.work_id);
+
+          ScanQueue.push_work(parsedSnippet);
+
+          close(client_fd);
+        }
+
+        close(server_fd);
+      }
+
+void calculForReturnData(Snippet &snippet){//임시작성
+    unordered_map<string, int> col_type, col_offlen;
+    for (int i = 0; i < snippet.table_col.size(); i++){
+        col_type.insert(make_pair(snippet.table_col[i], snippet.table_datatype[i]));
+        col_offlen.insert(make_pair(snippet.table_col[i], snippet.table_offlen[i]));
+    }
+    
+    vector<int> return_datatype, return_offlen;
+    for (int i = 0; i < snippet.column_projection.size(); i++){
+        //tpc-h 쿼리 동작만 수행하도록 작성 => 수정필요
+        if(snippet.column_projection[i].values[0] == "CASE"){
+            return_datatype.push_back(3);
+            return_offlen.push_back(4);
+        }else if(snippet.column_projection[i].values[0] == "EXTRACT"){
+            // return_datatype.push_back(14);
+            // return_offlen.push_back(3);
+            return_datatype.push_back(3);
+            return_offlen.push_back(4);
+        }else if(snippet.column_projection[i].values[0] == "SUBSTRING"){
+            return_datatype.push_back(254);
+            return_offlen.push_back(2);
+        }else{
+            if(snippet.column_projection[i].values.size() == 1){
+                return_datatype.push_back(col_type[snippet.column_projection[i].values[0]]);
+                return_offlen.push_back(col_offlen[snippet.column_projection[i].values[0]]);
+            }else{
+                int multiple_count = 0;
+                for (int j = 0; j < snippet.column_projection[i].values.size(); j++){
+                    if(snippet.column_projection[i].values[j] == "*"){
+                        multiple_count++;
+                    }
+                }
+                if(multiple_count == 1){
+                    return_datatype.push_back(246);
+                    return_offlen.push_back(8);
+                }else if(multiple_count == 2){
+                    return_datatype.push_back(246);
+                    return_offlen.push_back(9);
+                }else{
+                    return_datatype.push_back(col_type[snippet.column_projection[i].values[0]]);
+                    return_offlen.push_back(col_offlen[snippet.column_projection[i].values[0]]);
+                }
             }
         }
-
-        //filter 작업인 경우 확인
-        if(document.HasMember("table_filter")){
-          Value &table_filter_ = document["table_filter"];
-          Document small_document;
-          small_document.SetObject();
-          rapidjson::Document::AllocatorType& allocator = small_document.GetAllocator();
-          small_document.AddMember("table_filter",table_filter_,allocator);
-          StringBuffer strbuf;
-          rapidjson::PrettyWriter<rapidjson::StringBuffer> writer(strbuf);
-	        small_document.Accept(writer);
-          table_filter = strbuf.GetString();
-          only_scan = false;
-        }else{
-          cout << "+++ only scan!! +++" << endl;//나중에 지워도 됨
-        }
-
-        //index scan인 경우 확인
-        if(document.HasMember("index_pk")){
-          cout << "+++ index scan!! +++" << endl;
-          Value &index_pk_ = document["index_pk"];
-          Document small_document;
-          small_document.SetObject();
-          rapidjson::Document::AllocatorType& allocator = small_document.GetAllocator();
-          small_document.AddMember("index_pk",index_pk_,allocator);
-          StringBuffer strbuf;
-          rapidjson::PrettyWriter<rapidjson::StringBuffer> writer(strbuf);
-	        small_document.Accept(writer);
-          index_pk = strbuf.GetString();
-          index_scan = true;
-        }else{
-          cout << "no index pk" << endl;//나중에 지워도 됨
-        }
-
-        // //pk가 있을 때 pk가 필요 컬럼인지 확인
-        // bool need_pk = false;
-        // std::list<PrimaryKey>::iterator iter;
-        // for(iter = primary_key_list.begin(); iter != primary_key_list.end(); iter++){
-        //   if (*find(column_filter.begin(), column_filter.end(), (*iter).key_name) == (*iter).key_name) {
-        //       need_pk = true;
-        //       break;
-        //   } 
-        // }
-
-        //스캔 타입 결정
-        if(!index_scan && !only_scan){
-          scan_type = Full_Scan_Filter;
-        }else if(!index_scan && only_scan){
-          scan_type = Full_Scan;
-        }else if(index_scan && !only_scan){
-          scan_type = Index_Scan_Filter;
-        }else{
-          scan_type = Index_Scan;
-        }
-       
     }
-};
-
-template <typename T>
-class WorkQueue
-{
-  condition_variable work_available;
-  mutex work_mutex;
-  queue<T> work;
-
-public:
-  void push_work(T item){
-    unique_lock<mutex> lock(work_mutex);
-
-    bool was_empty = work.empty();
-    work.push(item);
-
-    lock.unlock();
-
-    if (was_empty){
-      work_available.notify_one();
-    }    
-  }
-
-  T wait_and_pop(){
-    unique_lock<mutex> lock(work_mutex);
-    while (work.empty()){
-      work_available.wait(lock);
-    }
-
-    T tmp = work.front();
-    work.pop();
-    return tmp;
-  }
-
-  int length(){
-	  int ret;
-	  unique_lock<mutex> lock(work_mutex);
-
-    ret = work.size();
-
-    lock.unlock();
-	  return ret;
-  }
-};
+    
+    snippet.projection_datatype = return_datatype;
+    snippet.projection_length = return_offlen;
+}
 
     // int level_ = 0;
     // bool blocks_maybe_compressed_ = true;
@@ -320,3 +176,32 @@ public:
     // std::string dev_name = "/dev/sda";
     // // const uint64_t handle_offset = 43673280512;
     // // const uint64_t block_size = 3995; //블록 사이즈 틀리지 않게!!
+
+
+    // 		//-------test----------------------
+// 	char json[8000];
+// 	int i=0;
+// 	memset(json,0,sizeof(json));
+// 	int json_fd = open("test.json",O_RDONLY);
+// 	while(1){
+// 		int res = read(json_fd,&json[i++],1);
+// 		if(res == 0){
+// 			break;
+// 		}
+// 	}
+// 	close(json_fd);
+// 	// cout << "*******************Snippet JSON*****************" << endl;
+//   	// cout << json << endl;
+//   	// cout << "************************************************" << endl;
+
+// 	Snippet parsedSnippet(json);
+// 	//로그
+// 	// printf("---------------------------------------------:: STEP3 ::---------------------------------------------\n");
+// 	printf("[CSD Input Interface] Recieve Snippet {ID : %d-%d} from Storage Engine Instance\n",parsedSnippet.query_id,parsedSnippet.work_id);
+// 	EnQueueScan(parsedSnippet);
+// 	//-----------------------------
+	
+// }
+
+// void Input::EnQueueScan(Snippet parsedSnippet_){
+// 	ScanQueue.push_work(parsedSnippet_);
