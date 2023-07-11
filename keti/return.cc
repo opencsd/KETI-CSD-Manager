@@ -1,7 +1,6 @@
 #include "return.h"
 
 void Return::ReturnResult(){
-
     while (1){
         MergeResult mergeResult = ReturnQueue.wait_and_pop();
                 
@@ -10,115 +9,59 @@ void Return::ReturnResult(){
 }
 
 void Return::SendDataToBufferManager(MergeResult &mergeResult){
-    cout << "\n[Send Data To Buffer Manager]" << endl;
-    //mergeBlock을 json ?
-    //printf("~~Send Data To BufferManager~~ # workid: %d, rows: %d, length: %d, offset_len: %ld, block_list_len: %ld\n",mergedBlock.work_id, mergedBlock.rows, mergedBlock.length, mergedBlock.row_offset.size(), mergedBlock.block_id_list.size());
-    // key_t key1=54321;
-    // int msqid;
-    // message msg;
-    // msg.msg_type=1;
-    // if((msqid=msgget(key1,IPC_CREAT|0666))==-1){
-    //     printf("msgget failed\n");
-    //     exit(0);
-    // }
-    // string rowfilter =  "[Send Merged Block Data To Buffer Manager]\n";
-    // rowfilter += "-------------------------------Merged Block Info----------------------------------\n";
-    // rowfilter += "| work id: " + to_string(mergeResult.work_id)+ " | length: " + to_string(mergeResult.length) 
-    //           + " | rows: " + to_string(mergeResult.rows) + " | \n";
-    // for(int i=0; i<mergeResult.block_id_list.size(); i++){
-    //     rowfilter += "block list[" + to_string(i) + "] : { " + to_string(get<0>(mergeResult.block_id_list[i])) + " : " 
-    //     +  to_string(get<1>(mergeResult.block_id_list[i])) + " : " +  to_string(get<2>(mergeResult.block_id_list[i])) 
-    //     + " : " +  to_string(get<3>(mergeResult.block_id_list[i])) + " }\n";
-    // }
-    // rowfilter += "------------------------------------------------------------------------------------\n";
-    
-    // cout << "---------------Merged Block Info-----------------" << endl;
-    // cout << "| work id: " << mergeResult.work_id << " | length: " << mergeResult.length
-    //      << " | rows: " << mergeResult.rows << endl;
-    // for(int i=0; i<mergeResult.merged_block_id_list.size(); i++){
-    //     cout << "[ " << mergeResult.merged_block_id_list[i].first << " : [";
-    //     list<int>::iterator iter2;
-    //     for(iter2 = mergeResult.merged_block_id_list[i].second.begin(); iter2 != mergeResult.merged_block_id_list[i].second.end(); iter2++){
-    //         cout << (*iter2) << " ";
-    //     }
-    //     cout << "] ]" << endl;
-    // }   
-    // cout << "mergeResult.length: " << mergeResult.length << endl;
-    // cout << "\n----------------------------------------------\n";
-    // for(int i = 0; i < mergeResult.length; i++){
-    //     printf("%02X",(u_char)mergeResult.data[i]);
-    // }
-    // cout << "\n------------------------------------------------\n";
+    float temp_size = float(mergeResult.length) / float(1024);
+    memset(msg, '\0', sizeof(msg));
+    sprintf(msg,"Send Data to Buffer Manager (Return Buffer Size : %.1fK)\n\n",temp_size);
+    KETILOG::DEBUGLOG(LOGTAG, msg);
 
-    // strcpy(msg.msg,rowfilter.c_str());
-    // if(msgsnd(msqid,&msg,sizeof(msg.msg),0)==-1){
-    //     printf("msgsnd failed\n");
-    //     exit(0);
-    // }
-    
-    // ostringstream osss;
-    // for(int i = 0; i < mergeResult.length; i++){
-    //     osss << hex << (int)mergeResult.data[i];
-    // }
-
-    // strcpy(msg.msg,osss.str().c_str());
-    // if(msgsnd(msqid,&msg,sizeof(msg.msg),0)==-1){
-    //     printf("msgsnd failed\n");
-    //     exit(0);
-    // }
-
-    // rowfilter = "------------------------------------------------------------------------------------\n";
-
-    // strcpy(msg.msg,rowfilter.c_str());
-    // if(msgsnd(msqid,&msg,sizeof(msg.msg),0)==-1){
-    //     printf("msgsnd failed\n");
-    //     exit(0);
-    // }
+    if(mergeResult.total_block_count == mergeResult.current_block_count){
+        memset(msg, '\0', sizeof(msg));
+        sprintf(msg,"Snippet {ID : %d-%d} Done\n",mergeResult.query_id,mergeResult.work_id);
+        KETILOG::INFOLOG(LOGTAG, msg);
+    }
 
     StringBuffer block_buf;
     PrettyWriter<StringBuffer> writer(block_buf);
 
     writer.StartObject();
 
-    writer.Key("Work ID");
+    writer.Key("queryID");
+    writer.Int(mergeResult.query_id);
+
+    writer.Key("workID");
     writer.Int(mergeResult.work_id);
 
-    // writer.Key("Block ID");
-    // writer.StartArray();
-    // for (int i = 0; i < mergeResult.merged_block_id_list.size(); i ++){
-    //     writer.StartArray();
-    //     writer.Int(mergeResult.merged_block_id_list[i].first);
-    //     writer.StartArray();
-    //     list<int>::iterator iter;
-    //     for(iter = mergeResult.merged_block_id_list[i].second.begin();
-    //          iter != mergeResult.merged_block_id_list[i].second.end(); iter++){
-    //         writer.Int((*iter));
-    //     }
-    //     writer.EndArray();
-    //     writer.EndArray();
-    // }
-    // writer.EndArray();
+    writer.Key("rowCount");
+    writer.Int(mergeResult.row_count);
 
-    writer.Key("nrows");
-    writer.Int(mergeResult.rows);
-
-    writer.Key("Row Offset");
+    writer.Key("rowOffset");
     writer.StartArray();
-    for (int i = 0; i < mergeResult.row_offset.size(); i ++){
+    for (int i = 0; i < mergeResult.row_offset.size(); i++){
         writer.Int(mergeResult.row_offset[i]);
     }
     writer.EndArray();
 
-    writer.Key("Length");
+    writer.Key("length");
     writer.Int(mergeResult.length);
 
-    writer.Key("CSD Name");
+    writer.Key("returnDatatype");
+    writer.StartArray();
+    for (int i = 0; i < mergeResult.projection_datatype.size(); i++){
+        writer.Int(mergeResult.projection_datatype[i]);
+    }
+    writer.EndArray();
+
+    writer.Key("returnOfflen");
+    writer.StartArray();
+    for (int i = 0; i < mergeResult.projection_length.size(); i++){
+        writer.Int(mergeResult.projection_length[i]);
+    }
+    writer.EndArray();
+
+    writer.Key("csdName");
     writer.String(mergeResult.csd_name.c_str());
 
-    writer.Key("Last valid block id");
-    writer.Int(mergeResult.last_valid_block_id);
-
-    writer.Key("Result block count");
+    writer.Key("resultBlockCount");
     writer.Int(mergeResult.result_block_count);
 
     writer.EndObject();
@@ -133,7 +76,7 @@ void Return::SendDataToBufferManager(MergeResult &mergeResult){
     }
     memset(&serv_addr, 0, sizeof(serv_addr));
     serv_addr.sin_family = AF_INET;
-    serv_addr.sin_addr.s_addr = inet_addr("10.0.5.33");
+    serv_addr.sin_addr.s_addr = inet_addr(BUFF_M_IP);
     serv_addr.sin_port = htons(BUFF_M_PORT);
 
     connect(sockfd,(const sockaddr*)&serv_addr,sizeof(serv_addr));
@@ -144,25 +87,13 @@ void Return::SendDataToBufferManager(MergeResult &mergeResult){
 
     static char cBuffer[PACKET_SIZE];
     if (recv(sockfd, cBuffer, PACKET_SIZE, 0) == 0){
-        cout << "client recv Error" << endl;
+        KETILOG::FATALLOG(LOGTAG,"client recv Error");
         return;
     };
 
     len = mergeResult.length;
     send(sockfd,&len,sizeof(len),0);
     send(sockfd, mergeResult.data, BUFF_SIZE, 0);
-    // cout << "send ok" << endl;
-    // free(mergeResult.data);
-
-    // printf("~MergeBlock~ # workid: %d, blockid: %d, rows: %d, length: %d, offset_len: %ld\n",result.work_id, result.block_id, result.rows, result.totallength, result.offset.size());
-    // rowfilter = "[Json Send To Buffer Manager]\n";
-    // rowfilter += block_buf_;
-    
-    // strcpy(msg.msg,rowfilter.c_str());
-    // if(msgsnd(msqid,&msg,sizeof(msg.msg),0)==-1){
-    //     printf("msgsnd failed\n");
-    //     exit(0);
-    // }
     
     close(sockfd);
 }
