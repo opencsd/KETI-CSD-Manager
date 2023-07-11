@@ -1,13 +1,7 @@
+ #include <unordered_map>
 #include <iostream>
-#include <unordered_map>
-#include <fcntl.h>
-#include <unistd.h>
-#include <iostream>
-#include <vector>
 
 using namespace std;
-
-#include "rocksdb/sst_file_reader.h"
 
 struct TableRep{
     string dev_name;
@@ -18,13 +12,36 @@ struct TableRep{
     string compression_name;
 };
 
-class TableManager{
-public:
-    TableManager(){}
-    
-    void InitCSDTableManager();//임시로 데이터 넣어놓음
-    TableRep GetTableRep(string table_name);
+class CSDTableManager{
+  public:
+    static void InitCSDTableManager(){
+      GetInstance().initCSDTableManager();
+    }
 
-private:
+    static TableRep GetTableRep(string table_name){
+      return GetInstance().getTableRep(table_name);
+    }
+
+  private:
+    CSDTableManager(){};
+
+    CSDTableManager(const CSDTableManager&);
+    ~CSDTableManager() {};
+    CSDTableManager& operator=(const CSDTableManager&){
+        return *this;
+    };
+
+    static CSDTableManager& GetInstance() {
+        static CSDTableManager csdTableManager;
+        return csdTableManager;
+    }
+
+    void initCSDTableManager();
+    TableRep getTableRep(string table_name);
+
+    inline const static std::string LOGTAG = "CSD Table Manager";
+    char msg[200];
+
+  private:
     unordered_map<string,struct TableRep> table_rep_;// key=table_name
 };
