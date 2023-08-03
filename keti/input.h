@@ -85,6 +85,7 @@ void Input::InputSnippet(){
             cout << "************************************************" << endl;
           }
 
+          // metric check start
           Snippet parsedSnippet(json.c_str());
           calculForReturnData(parsedSnippet);
 
