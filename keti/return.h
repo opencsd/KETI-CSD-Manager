@@ -18,6 +18,7 @@
 #include "config.h"
 #include "keti_type.h"
 #include "keti_log.h"
+#include "metric_check.h"
 
 using namespace rapidjson;
 using namespace std;

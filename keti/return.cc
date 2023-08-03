@@ -16,6 +16,7 @@ void Return::SendDataToBufferManager(MergeResult &mergeResult){
 
     if(mergeResult.total_block_count == mergeResult.current_block_count){
         //metric check end
+        send_Query_info("Query End");
         memset(msg, '\0', sizeof(msg));
         sprintf(msg,"Snippet {ID : %d-%d} Done\n",mergeResult.query_id,mergeResult.work_id);
         KETILOG::INFOLOG(LOGTAG, msg);
