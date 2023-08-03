@@ -1,6 +1,7 @@
 #pragma once
 
 #include "scan.h"
+#include "metric_check.h"
 
 using namespace rapidjson;
 
@@ -86,6 +87,7 @@ void Input::InputSnippet(){
           }
 
           // metric check start
+          send_Query_info("Query Start");
           Snippet parsedSnippet(json.c_str());
           calculForReturnData(parsedSnippet);
 
