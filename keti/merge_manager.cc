@@ -239,7 +239,7 @@ int MergeManager::calculPostfix(vector<string> values, vector<int> types, Filter
                     double result = op1.first.varInt * op2.first.varDouble;
                     T t;
                     t.varDouble = result;
-                    t.real_size = op2.first.real_size;
+                    t.real_size = op1.first.real_size;
                     oper_stack.push(make_pair(t,DOUBLE_));
                 }else{
                     KETILOG::FATALLOG(LOGTAG,"merge_m>operator>multiple>else");

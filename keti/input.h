@@ -85,6 +85,7 @@ void Input::InputSnippet(){
             cout << "************************************************" << endl;
           }
 
+          //start
           Snippet parsedSnippet(json.c_str());
           calculForReturnData(parsedSnippet);
 
@@ -133,7 +134,11 @@ void calculForReturnData(Snippet &snippet){//임시작성
                 int multiple_count = 0;
                 for (int j = 0; j < snippet.column_projection[i].values.size(); j++){
                     if(snippet.column_projection[i].values[j] == "*"){
+                      if(snippet.column_projection[i].values[j-1] == "ps_availqty"){//임시로 작성!!!!
+                        multiple_count--;
+                      }else{
                         multiple_count++;
+                      }
                     }
                 }
                 if(multiple_count == 1){
