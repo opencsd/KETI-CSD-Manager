@@ -156,6 +156,7 @@ int MergeManager::calculPostfix(vector<string> values, vector<int> types, Filter
                 }case DOUBLE:{
                     T t;
                     t.varDouble = stod(value);
+                    t.real_size = 1;//임시작성!!! tpch20
                     oper_stack.push(make_pair(t,DOUBLE_));
                     break;
                 }case STRING:{
