@@ -1476,10 +1476,6 @@ int Filter::BlockFilter(Result &scanResult)
                             RV = tmps.substr(1);
                             subFor = atoi(RV.c_str());
                             tmpsubstring = LV.substr(subFrom,subFor);
-                            // Value &Extra = filterarray[j]["EXTRA"];
-                            // // Extra = filterarray[j]["EXTRA"].GetArray();
-                            // CV = InOperator(LV, Extra, typedata, rowbuf);
-                            // cout << "type big" << endl;
                         }
                         else if (typedata[filterarray[j]["LV"].GetString()] == 246) //예외 Decimal일때
                         {
@@ -1801,6 +1797,7 @@ bool Filter::InOperator(string lv, Value &rv, unordered_map<string, int> typedat
         }
         else //걍 int면?
         {
+            cout << "# " << rv[i].GetInt() << endl;
             RV = ItoDec(rv[i].GetInt());
         }
         lv = rtrim_(lv);
