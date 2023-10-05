@@ -29,11 +29,11 @@ struct message {
 typedef enum DEBUGG_LEVEL {
     TRACE = 0,
     DEBUG = 1,
-    INFO = 2,
-    WARN = 3,
-    ERROR = 4,
-    FATAL = 5,
-    METRIC = 6
+    METRIC = 2,
+    INFO = 3,
+    WARN = 4,
+    ERROR = 5,
+    FATAL = 6
 }KETI_DEBUGG_LEVEL;
 
 class KETILOG {
@@ -50,7 +50,7 @@ class KETILOG {
             return GetInstance().LOG_LEVEL;
         }
 
-        static void TRACELOG(std::string id, char msg[]){
+        static void TRACELOG(std::string id, const char msg[]){
         //     key_t key = MSQID;
         //     int msqid;
         //     std::string log_str;
@@ -74,7 +74,7 @@ class KETILOG {
             }
         }
 
-        static void DEBUGLOG(std::string id, char msg[]){
+        static void DEBUGLOG(std::string id, const char msg[]){
             if(GetInstance().LOG_LEVEL <= DEBUG){
                 printf("[%s] %s", id.c_str(), msg);
             }
@@ -82,11 +82,11 @@ class KETILOG {
 
         static void DEBUGLOG(std::string id, string msg){
             if(GetInstance().LOG_LEVEL <= INFO){
-                printf("[%s] %s", id.c_str(), msg);
+                printf("[%s] %s", id.c_str(), msg.c_str());
             }
         }
 
-        static void INFOLOG(std::string id, char msg[]){
+        static void INFOLOG(std::string id, const char msg[]){
             if(GetInstance().LOG_LEVEL <= INFO){
                 printf("[%s] %s", id.c_str(), msg);
             }
@@ -94,11 +94,11 @@ class KETILOG {
 
         static void INFOLOG(std::string id, string msg){
             if(GetInstance().LOG_LEVEL <= INFO){
-                printf("[%s] %s", id.c_str(), msg);
+                printf("[%s] %s", id.c_str(), msg.c_str());
             }
         }
 
-        static void WARNLOG(std::string id, char msg[]){
+        static void WARNLOG(std::string id, const char msg[]){
             if(GetInstance().LOG_LEVEL <= WARN){
                 printf("[%s] %s", id.c_str(), msg);
             }
@@ -106,11 +106,11 @@ class KETILOG {
 
         static void WARNLOG(std::string id, string msg){
             if(GetInstance().LOG_LEVEL <= ERROR){
-                printf("[%s] %s", id.c_str(), msg);
+                printf("[%s] %s", id.c_str(), msg.c_str());
             }
         }
 
-        static void ERRORLOG(std::string id, char msg[]){
+        static void ERRORLOG(std::string id, const char msg[]){
             if(GetInstance().LOG_LEVEL <= ERROR){
                 printf("[%s] %s", id.c_str(), msg);
             }
@@ -122,7 +122,7 @@ class KETILOG {
             }
         }
 
-        static void FATALLOG(std::string id, char msg[]){
+        static void FATALLOG(std::string id, const char msg[]){
             if(GetInstance().LOG_LEVEL <= FATAL){
                 printf("[%s] %s", id.c_str(), msg);
             }

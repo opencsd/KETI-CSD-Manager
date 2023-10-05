@@ -63,6 +63,7 @@ typedef enum opertype
     NOT,     // ISNOT과 관련 없음 OPERATOR 앞에 붙는 형식 --> 혼자 들어오는 oper
     AND,     // AND --> 혼자 들어오는 oper
     OR,      // OR --> 혼자 들어오는 oper
+    ALL,
     SUBSTRING = 16,
 }opertype;
 
