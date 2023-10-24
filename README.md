@@ -1,8 +1,6 @@
-## Introduction of KETI-OpenCSD CSD-Container
+## Introduction of OpenCSD KETI-CSD-Worker-Module
 -------------
-![Alt text](/%EC%82%AC%EC%A7%84/pushdown.jpg)
-
-CSD-Container for KETI-OpenCSD Platform
+CSD-Worker-Module for KETI-OpenCSD Platform
 
 Developed by KETI
 
@@ -10,11 +8,13 @@ Developed by KETI
 -------------
 [1. Requirement](#requirement)
 
-[2. How To Install](#How-To-Install)
+[2. Required Module](#required-Module)
 
-[3. Modules](#modules)
+[3. How To Install](#How-To-Install)
 
-[4. Governance](#governance)
+[4. Modules](#modules)
+
+[5. Governance](#governance)
 
 ## Requirement
 -------------
@@ -24,18 +24,25 @@ Developed by KETI
 
 >   RapidJSON
 
+## Required Module
+- *[KETI-DB-Connector-Instance](https://github.com/opencsd/KETI-DB-Connector-Instance)*
+- *[KETI-Storage-Engine-Instance](https://github.com/opencsd/KETI-Storage-Engine-Instance)*
+- *[KETI-CSD-Proxy](https://github.com/opencsd/KETI-CSD-Proxy)*
+- *[KETI-LBA2PBA-Manager](https://github.com/opencsd/KETI-LBA2PBA-Manager)*
+- *[RocksDB](https://github.com/facebook/rocksdb)*
+
 ## How To Install
 -------------
 # How To Build
 ```bash
 git submodule add https://github.com/facebook/rocksdb
 cd keti
-./1.build.sh
+make -j 4
 ```
 
 ## Modules
 -------------
-### CSD Input Layer
+### CSD Input Interface
 -------------
 A module that receives the snippet delivered by the Storage Engine Node.
 
@@ -84,7 +91,3 @@ Merge information is delivered in JSON format, and merge data is delivered in ra
 -------------
 This work was supported by Institute of Information & communications Technology Planning & Evaluation (IITP) grant funded by the Korea government(MSIT) (No.2021-0-00862, Development of DBMS storage engine technology to minimize massive data movement)
 
-## Others
--------------
-Due to the structure change, in the first half of the year, we worked on local repositories and private github.
-> https://github.com/KETI-OpenCSD/CSD-Container
