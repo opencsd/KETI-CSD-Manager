@@ -73,7 +73,7 @@ void Input::InputSnippet(){
               exit(1);
             }
             length -= numread;
-              buffer[numread] = '\0';
+            buffer[numread] = '\0';
             json += buffer;
 
               if (length == 0)

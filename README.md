@@ -33,7 +33,6 @@ Developed by KETI
 
 ## How To Install
 -------------
-# How To Build
 ```bash
 git submodule add https://github.com/facebook/rocksdb
 cd keti
