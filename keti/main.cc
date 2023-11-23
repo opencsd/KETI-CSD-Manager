@@ -45,6 +45,7 @@ int main(int argc, char** argv) {
     FilterLayer1.join();
     // FilterLayer2.join();
     // FilterLayer3.join();
+    // std::cout << "test" << std::endl;
     MergeLayer.join();
     ReturnInterface.join();
     
