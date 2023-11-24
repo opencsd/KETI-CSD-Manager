@@ -30,7 +30,7 @@ using namespace rapidjson;
 #define JIFFIES_NUM 4
 
 #define CSD_METRIC_INTERFACE_IP "10.0.4.83"
-#define CSD_METRIC_INTERFACE_PORT 40800
+#define CSD_METRIC_INTERFACE_PORT 30004
 
 struct Result { //metric 수집 결과 저장
     float totalCpuCapacity, cpuUsage, cpuUsagePercent; // cpu
@@ -256,32 +256,32 @@ class MetricCollector
             writer.String(result.ip.c_str());
 
             writer.Key("totalCpuCapacity");
-            writer.Double(result.totalCpuCapacity);
+            writer.Int(result.totalCpuCapacity);
             writer.Key("cpuUsage");
             writer.Double(result.cpuUsage); 
             writer.Key("cpuUsagePercent");
             writer.Double(result.cpuUsagePercent);
 
             writer.Key("totalMemCapacity");
-            writer.Double(result.totalMemCapacity);
+            writer.Int(result.totalMemCapacity);
             writer.Key("memUsage");
-            writer.Double(result.memUsage);
+            writer.Int(result.memUsage);
             writer.Key("memUsagePercent");
             writer.Double(result.memUsagePercent);
 
             writer.Key("totalDiskCapacity");
-            writer.Double(result.totalDiskCapacity);
+            writer.Int(result.totalDiskCapacity);
             writer.Key("diskUsage");
-            writer.Double(result.diskUsage);
+            writer.Int(result.diskUsage);
             writer.Key("diskUsagePercent");
             writer.Double(result.diskUsagePercent);
 
             writer.Key("networkRxData");
-            writer.Double(result.networkRxData);
+            writer.Int(result.networkRxData);
             writer.Key("networkTxData");
-            writer.Double(result.networkTxData);
+            writer.Int(result.networkTxData);
             writer.Key("networkBandwidth");
-            writer.Double(result.networkUsage);
+            writer.Int(result.networkUsage);
 
             writer.EndObject();
         }
@@ -362,7 +362,7 @@ class MetricCollector
             close(sock);
 
             //수집 주기(2초마다 대기)
-            this_thread::sleep_for(chrono::seconds(2));
+            // this_thread::sleep_for(chrono::seconds(2));
         }
 };
 
