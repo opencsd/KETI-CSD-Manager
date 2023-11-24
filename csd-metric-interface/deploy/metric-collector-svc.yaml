@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: csd-metric-interface
+  labels:
+    name: csd-metric-interface
+spec:
+  type: NodePort
+  ports:
+  - port: 40800
+    targetPort: 40800
+    nodePort: 30004
+    protocol: TCP
+  selector:
+    name: csd-metric-interface

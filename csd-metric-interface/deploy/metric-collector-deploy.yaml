@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: csd-metric-interface
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: csd-metric-interface
+  template:
+    metadata:
+      labels:
+        name: csd-metric-interface
+    spec:
+      imagePullSecrets:
+        - name: regcred
+      containers:
+        - name: csd-metric-interface
+          image: ketidevit2/csd-metric-interface:v0.0.1
+          command:
+          - csd-metric-interface
+          imagePullPolicy: Always
+          env:
+            - name: WATCH_NAMESPACE
+              value: ""
+            - name: POD_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+            - name: OpenCSD_METRIC_COLLECTOR_IP
+              value: "10.0.4.87"
+            - name: OpenCSD_METRIC_COLLECTOR_PORT
+              value: "30003"
+            - name: OPERATOR_NAME
+              value: "csd-metric-interface"
+      tolerations:
+        - key: node.kubernetes.io/not-ready
+          effect: NoExecute
+          tolerationSeconds: 0
+        - key: node.kubernetes.io/unreachable
+          effect: NoExecute
+          tolerationSeconds: 0
