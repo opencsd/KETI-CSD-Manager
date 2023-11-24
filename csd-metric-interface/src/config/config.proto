@@ -1,0 +1,33 @@
+syntax = "proto3";
+
+package config;
+
+option go_package = "/root/workspace/HUN/KETI-CSD-Manager/csd-metric-interface";
+
+service CSDMetric {
+    rpc receiveCSDMetric (CSDMetricRequest) returns (MetricResponse);
+}
+
+message CSDMetricRequest { // csd metric 전송
+    int32 id = 1;
+    
+	int32 totalCpuCapacity = 2;
+	double cpuUsage = 3;
+	double cpuUsagePercent = 4;
+
+	int32 totalMemCapacity = 5;
+	int32 memUsage = 6;
+	double memUsagePercent = 7;
+
+	int32 totalDiskCapacity = 8;
+	int32 diskUsage = 9;
+	double diskUsagePercent = 10;
+
+	int32 networkBandwidth = 11;
+	int32 networkRxData = 12;
+	int32 networkTxData = 13;
+}
+
+message MetricResponse { // csd metric 응답
+    string json_config = 1;
+}
