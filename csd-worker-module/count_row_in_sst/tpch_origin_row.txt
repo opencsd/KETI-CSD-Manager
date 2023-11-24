@@ -1,0 +1,134 @@
+root@Storage-Node:~/workspace/CSD-Worker-Module/count_row_in_sst# ./main customer/000664.sst
+= Total Row Count : 18750
+root@Storage-Node:~/workspace/CSD-Worker-Module/count_row_in_sst# ./main customer/000723.sst
+= Total Row Count : 18750
+root@Storage-Node:~/workspace/CSD-Worker-Module/count_row_in_sst# ./main customer/000724.sst
+= Total Row Count : 18750
+root@Storage-Node:~/workspace/CSD-Worker-Module/count_row_in_sst# ./main customer/000725.sst
+= Total Row Count : 18750
+root@Storage-Node:~/workspace/CSD-Worker-Module/count_row_in_sst# ./main customer/000726.sst
+= Total Row Count : 18750
+root@Storage-Node:~/workspace/CSD-Worker-Module/count_row_in_sst# ./main customer/000786.sst
+= Total Row Count : 18750
+root@Storage-Node:~/workspace/CSD-Worker-Module/count_row_in_sst# ./main customer/000787.sst
+= Total Row Count : 18750
+
+
+root@Storage-Node:~/workspace/CSD-Worker-Module/count_row_in_sst# ./main lineitem/A/001379.sst
+= Total Row Count : 428390
+root@Storage-Node:~/workspace/CSD-Worker-Module/count_row_in_sst# ./main lineitem/A/001383.sst
+= Total Row Count : 426537
+root@Storage-Node:~/workspace/CSD-Worker-Module/count_row_in_sst# ./main lineitem/A/001400.sst
+= Total Row Count : 424770
+root@Storage-Node:~/workspace/CSD-Worker-Module/count_row_in_sst# ./main lineitem/A/001435.sst
+= Total Row Count : 424667
+root@Storage-Node:~/workspace/CSD-Worker-Module/count_row_in_sst# ./main lineitem/A/001437.sst
+= Total Row Count : 424789
+root@Storage-Node:~/workspace/CSD-Worker-Module/count_row_in_sst# ./main lineitem/A/001472.sst
+= Total Row Count : 424774
+root@Storage-Node:~/workspace/CSD-Worker-Module/count_row_in_sst# ./main lineitem/A/001474.sst
+= Total Row Count : 424906
+root@Storage-Node:~/workspace/CSD-Worker-Module/count_row_in_sst# ./main lineitem/A/001476.sst
+= Total Row Count : 424759
+
+root@Storage-Node:~/workspace/CSD-Worker-Module/count_row_in_sst# ./main lineitem/B/001382.sst
+= Total Row Count : 321762
+root@Storage-Node:~/workspace/CSD-Worker-Module/count_row_in_sst# ./main lineitem/B/001384.sst
+= Total Row Count : 323615
+root@Storage-Node:~/workspace/CSD-Worker-Module/count_row_in_sst# ./main lineitem/B/001434.sst
+= Total Row Count : 325382
+root@Storage-Node:~/workspace/CSD-Worker-Module/count_row_in_sst# ./main lineitem/B/001436.sst
+= Total Row Count : 325485
+root@Storage-Node:~/workspace/CSD-Worker-Module/count_row_in_sst# ./main lineitem/B/001457.sst
+= Total Row Count : 325246
+root@Storage-Node:~/workspace/CSD-Worker-Module/count_row_in_sst# ./main lineitem/B/001471.sst
+= Total Row Count : 325363
+root@Storage-Node:~/workspace/CSD-Worker-Module/count_row_in_sst# ./main lineitem/B/001473.sst
+= Total Row Count : 325378
+root@Storage-Node:~/workspace/CSD-Worker-Module/count_row_in_sst# ./main lineitem/B/001478.sst
+= Total Row Count : 325392
+
+
+root@Storage-Node:~/workspace/CSD-Worker-Module/count_row_in_sst# ./main orders/000290.sst
+= Total Row Count : 187500
+root@Storage-Node:~/workspace/CSD-Worker-Module/count_row_in_sst# ./main orders/000291.sst
+= Total Row Count : 187500
+root@Storage-Node:~/workspace/CSD-Worker-Module/count_row_in_sst# ./main orders/000292.sst
+= Total Row Count : 187500
+root@Storage-Node:~/workspace/CSD-Worker-Module/count_row_in_sst# ./main orders/000351.sst
+= Total Row Count : 187500
+root@Storage-Node:~/workspace/CSD-Worker-Module/count_row_in_sst# ./main orders/000352.sst
+= Total Row Count : 187500
+root@Storage-Node:~/workspace/CSD-Worker-Module/count_row_in_sst# ./main orders/000353.sst
+= Total Row Count : 187500
+root@Storage-Node:~/workspace/CSD-Worker-Module/count_row_in_sst# ./main orders/000354.sst
+= Total Row Count : 187500
+root@Storage-Node:~/workspace/CSD-Worker-Module/count_row_in_sst# ./main orders/000413.sst
+= Total Row Count : 187500
+
+
+root@Storage-Node:~/workspace/CSD-Worker-Module/count_row_in_sst# ./main part/000664.sst
+= Total Row Count : 18750
+root@Storage-Node:~/workspace/CSD-Worker-Module/count_row_in_sst# ./main part/000723.sst
+= Total Row Count : 18750
+root@Storage-Node:~/workspace/CSD-Worker-Module/count_row_in_sst# ./main part/000724.sst
+= Total Row Count : 18750
+root@Storage-Node:~/workspace/CSD-Worker-Module/count_row_in_sst# ./main part/000723.sst
+= Total Row Count : 18750
+root@Storage-Node:~/workspace/CSD-Worker-Module/count_row_in_sst# ./main part/000724.sst
+= Total Row Count : 18750
+root@Storage-Node:~/workspace/CSD-Worker-Module/count_row_in_sst# ./main part/000725.sst
+= Total Row Count : 18750
+root@Storage-Node:~/workspace/CSD-Worker-Module/count_row_in_sst# ./main part/000726.sst
+= Total Row Count : 18750
+root@Storage-Node:~/workspace/CSD-Worker-Module/count_row_in_sst# ./main part/000785.sst
+= Total Row Count : 18750
+root@Storage-Node:~/workspace/CSD-Worker-Module/count_row_in_sst# ./main part/000786.sst
+= Total Row Count : 18750
+root@Storage-Node:~/workspace/CSD-Worker-Module/count_row_in_sst# ./main part/000787.sst
+= Total Row Count : 18750
+
+
+root@Storage-Node:~/workspace/CSD-Worker-Module/count_row_in_sst# ./main partsupp/000538.sst
+= Total Row Count : 100000
+root@Storage-Node:~/workspace/CSD-Worker-Module/count_row_in_sst# ./main partsupp/000539.sst
+= Total Row Count : 100000
+root@Storage-Node:~/workspace/CSD-Worker-Module/count_row_in_sst# ./main partsupp/000540.sst
+= Total Row Count : 100000
+root@Storage-Node:~/workspace/CSD-Worker-Module/count_row_in_sst# ./main partsupp/000599.sst
+= Total Row Count : 100000
+root@Storage-Node:~/workspace/CSD-Worker-Module/count_row_in_sst# ./main partsupp/000600.sst
+= Total Row Count : 100000
+root@Storage-Node:~/workspace/CSD-Worker-Module/count_row_in_sst# ./main partsupp/000601.sst
+= Total Row Count : 100000
+root@Storage-Node:~/workspace/CSD-Worker-Module/count_row_in_sst# ./main partsupp/000602.sst
+= Total Row Count : 100000
+root@Storage-Node:~/workspace/CSD-Worker-Module/count_row_in_sst# ./main partsupp/000661.sst
+= Total Row Count : 100000
+
+
+root@Storage-Node:~/workspace/CSD-Worker-Module/count_row_in_sst# ./main supplier/000788.sst
+= Total Row Count : 1250
+root@Storage-Node:~/workspace/CSD-Worker-Module/count_row_in_sst# ./main supplier/000847.sst
+= Total Row Count : 1250
+root@Storage-Node:~/workspace/CSD-Worker-Module/count_row_in_sst# ./main supplier/000848.sst
+= Total Row Count : 1250
+root@Storage-Node:~/workspace/CSD-Worker-Module/count_row_in_sst# ./main supplier/000849.sst
+= Total Row Count : 1250
+root@Storage-Node:~/workspace/CSD-Worker-Module/count_row_in_sst# ./main supplier/000850.sst
+= Total Row Count : 1250
+root@Storage-Node:~/workspace/CSD-Worker-Module/count_row_in_sst# ./main supplier/000923.sst
+= Total Row Count : 1250
+root@Storage-Node:~/workspace/CSD-Worker-Module/count_row_in_sst# ./main supplier/000924.sst
+= Total Row Count : 1250
+root@Storage-Node:~/workspace/CSD-Worker-Module/count_row_in_sst# ./main supplier/000925.sst
+= Total Row Count : 1250
+
+
+root@Storage-Node:~/workspace/CSD-Worker-Module/count_row_in_sst# ./main nation/000663.sst
+= Total Row Count : 25
+
+
+root@Storage-Node:~/workspace/CSD-Worker-Module/count_row_in_sst# ./main region/000662.sst
+= Total Row Count : 5
+root@Storage-Node:~/workspace/CSD-Worker-Module/count_row_in_sst# 

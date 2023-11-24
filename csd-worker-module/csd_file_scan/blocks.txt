@@ -1,0 +1,692 @@
+root@keti-csd-120:~/csd-worker-module/opencsd-storage-node11/keti# ./main sstfile/customer/001174.sst
+---------------------------------------------:: STEP3 ::---------------------------------------------
+[CSD Input Interface] Recieve Snippet {ID : 4-0} from Storage Engine Instance
+[CSD Scan] Scanning Data ... (Block : 8/300, Scanned Size : 29.0K)
+[CSD Merge Manager] Merging Block ... (Current Buffer Size : 1.5K)
+
+root@keti-csd-120:~/csd-worker-module/opencsd-storage-node11/keti# ./main sstfile/customer/001190.sst
+---------------------------------------------:: STEP3 ::---------------------------------------------
+[CSD Input Interface] Recieve Snippet {ID : 4-0} from Storage Engine Instance
+[CSD Scan] Scanning Data ... (Block : 8/300, Scanned Size : 28.6K)
+[CSD Merge Manager] Merging Block ... (Current Buffer Size : 1.5K)
+
+root@keti-csd-120:~/csd-worker-module/opencsd-storage-node11/keti# ./main sstfile/customer/001205.sst
+---------------------------------------------:: STEP3 ::---------------------------------------------
+[CSD Input Interface] Recieve Snippet {ID : 4-0} from Storage Engine Instance
+[CSD Scan] Scanning Data ... (Block : 8/300, Scanned Size : 29.1K)
+[CSD Merge Manager] Merging Block ... (Current Buffer Size : 1.5K)
+
+root@keti-csd-120:~/csd-worker-module/opencsd-storage-node11/keti# ./main sstfile/customer/001221.sst
+---------------------------------------------:: STEP3 ::---------------------------------------------
+[CSD Input Interface] Recieve Snippet {ID : 4-0} from Storage Engine Instance
+[CSD Scan] Scanning Data ... (Block : 8/300, Scanned Size : 29.0K)
+[CSD Merge Manager] Merging Block ... (Current Buffer Size : 1.5K)
+
+root@keti-csd-120:~/csd-worker-module/opencsd-storage-node11/keti# ./main sstfile/customer/001252.sst
+---------------------------------------------:: STEP3 ::---------------------------------------------
+[CSD Input Interface] Recieve Snippet {ID : 4-0} from Storage Engine Instance
+[CSD Scan] Scanning Data ... (Block : 8/300, Scanned Size : 29.5K)
+[CSD Merge Manager] Merging Block ... (Current Buffer Size : 1.5K)
+
+root@keti-csd-120:~/csd-worker-module/opencsd-storage-node11/keti# ./main sstfile/customer/001236.sst
+---------------------------------------------:: STEP3 ::---------------------------------------------
+[CSD Input Interface] Recieve Snippet {ID : 4-0} from Storage Engine Instance
+[CSD Scan] Scanning Data ... (Block : 8/300, Scanned Size : 29.1K)
+[CSD Merge Manager] Merging Block ... (Current Buffer Size : 1.5K)
+
+root@keti-csd-120:~/csd-worker-module/opencsd-storage-node11/keti# ./main sstfile/customer/001267.sst
+---------------------------------------------:: STEP3 ::---------------------------------------------
+[CSD Input Interface] Recieve Snippet {ID : 4-0} from Storage Engine Instance
+[CSD Scan] Scanning Data ... (Block : 8/300, Scanned Size : 29.1K)
+[CSD Merge Manager] Merging Block ... (Current Buffer Size : 1.5K)
+
+root@keti-csd-120:~/csd-worker-module/opencsd-storage-node11/keti# ./main sstfile/customer/001283.sst
+---------------------------------------------:: STEP3 ::---------------------------------------------
+[CSD Input Interface] Recieve Snippet {ID : 4-0} from Storage Engine Instance
+[CSD Scan] Scanning Data ... (Block : 8/300, Scanned Size : 29.4K)
+[CSD Merge Manager] Merging Block ... (Current Buffer Size : 1.5K)
+
+root@keti-csd-120:~/csd-worker-module/opencsd-storage-node11/keti# ./main sstfile/lineitem/001388.sst
+---------------------------------------------:: STEP3 ::---------------------------------------------
+[CSD Input Interface] Recieve Snippet {ID : 3-1} from Storage Engine Instance
+[CSD Scan] Scanning Data ... (Block : 15/300, Scanned Size : 52.9K)
+[CSD Scan] Scanning Data ... (Block : 30/300, Scanned Size : 52.9K)
+[CSD Scan] Scanning Data ... (Block : 45/300, Scanned Size : 52.9K)
+[CSD Scan] Scanning Data ... (Block : 60/300, Scanned Size : 52.9K)
+[CSD Scan] Scanning Data ... (Block : 75/300, Scanned Size : 52.9K)
+[CSD Merge Manager] Merging Block ... (Current Buffer Size : 1.8K)
+[CSD Scan] Scanning Data ... (Block : 90/300, Scanned Size : 53.0K)
+[CSD Scan] Scanning Data ... (Block : 105/300, Scanned Size : 53.0K)
+[CSD Scan] Scanning Data ... (Block : 120/300, Scanned Size : 52.9K)
+[CSD Scan] Scanning Data ... (Block : 135/300, Scanned Size : 52.9K)
+[CSD Merge Manager] Merging Block ... (Current Buffer Size : 3.6K)
+[CSD Scan] Scanning Data ... (Block : 150/300, Scanned Size : 53.0K)
+[CSD Scan] Scanning Data ... (Block : 165/300, Scanned Size : 52.9K)
+[CSD Scan] Scanning Data ... (Block : 180/300, Scanned Size : 53.0K)
+[CSD Scan] Scanning Data ... (Block : 195/300, Scanned Size : 52.9K)
+[CSD Merge Manager] Merging Block ... (Current Buffer Size : 5.4K)
+[CSD Scan] Scanning Data ... (Block : 210/300, Scanned Size : 52.9K)
+[CSD Scan] Scanning Data ... (Block : 225/300, Scanned Size : 52.9K)
+[CSD Scan] Scanning Data ... (Block : 240/300, Scanned Size : 52.9K)
+[CSD Scan] Scanning Data ... (Block : 248/300, Scanned Size : 14.3K)
+[CSD Merge Manager] Merging Block ... (Current Buffer Size : 7.2K)
+[CSD Merge Manager] Merging Block ... (Current Buffer Size : 9.0K)
+[CSD Merge Manager] Merging Block ... (Current Buffer Size : 10.8K)
+[CSD Merge Manager] Merging Block ... (Current Buffer Size : 12.6K)
+[CSD Merge Manager] Merging Block ... (Current Buffer Size : 14.4K)
+[CSD Merge Manager] Merging Block ... (Current Buffer Size : 16.2K)
+[CSD Merge Manager] Merging Block ... (Current Buffer Size : 18.0K)
+[CSD Merge Manager] Merging Block ... (Current Buffer Size : 19.8K)
+[CSD Merge Manager] Merging Block ... (Current Buffer Size : 21.6K)
+[CSD Merge Manager] Merging Block ... (Current Buffer Size : 23.4K)
+[CSD Merge Manager] Merging Block ... (Current Buffer Size : 25.2K)
+[CSD Merge Manager] Merging Block ... (Current Buffer Size : 27.0K)
+[CSD Merge Manager] Merging Block ... (Current Buffer Size : 28.8K)
+[CSD Merge Manager] Merging Block ... (Current Buffer Size : 29.3K)
+
+root@keti-csd-120:~/csd-worker-module/opencsd-storage-node11/keti# ./main sstfile/lineitem/001404.sst
+---------------------------------------------:: STEP3 ::---------------------------------------------
+[CSD Input Interface] Recieve Snippet {ID : 3-1} from Storage Engine Instance
+[CSD Scan] Scanning Data ... (Block : 15/300, Scanned Size : 52.9K)
+[CSD Scan] Scanning Data ... (Block : 30/300, Scanned Size : 52.9K)
+[CSD Scan] Scanning Data ... (Block : 45/300, Scanned Size : 52.9K)
+[CSD Scan] Scanning Data ... (Block : 60/300, Scanned Size : 53.0K)
+[CSD Scan] Scanning Data ... (Block : 75/300, Scanned Size : 53.0K)
+[CSD Merge Manager] Merging Block ... (Current Buffer Size : 1.8K)
+[CSD Scan] Scanning Data ... (Block : 90/300, Scanned Size : 53.0K)
+[CSD Scan] Scanning Data ... (Block : 105/300, Scanned Size : 52.9K)
+[CSD Scan] Scanning Data ... (Block : 120/300, Scanned Size : 53.0K)
+[CSD Scan] Scanning Data ... (Block : 135/300, Scanned Size : 52.9K)
+[CSD Scan] Scanning Data ... (Block : 150/300, Scanned Size : 52.9K)
+[CSD Merge Manager] Merging Block ... (Current Buffer Size : 3.6K)
+[CSD Scan] Scanning Data ... (Block : 165/300, Scanned Size : 52.9K)
+[CSD Scan] Scanning Data ... (Block : 180/300, Scanned Size : 53.0K)
+[CSD Scan] Scanning Data ... (Block : 195/300, Scanned Size : 52.9K)
+[CSD Scan] Scanning Data ... (Block : 210/300, Scanned Size : 52.9K)
+[CSD Merge Manager] Merging Block ... (Current Buffer Size : 5.4K)
+[CSD Scan] Scanning Data ... (Block : 225/300, Scanned Size : 53.0K)
+[CSD Scan] Scanning Data ... (Block : 240/300, Scanned Size : 52.9K)
+[CSD Scan] Scanning Data ... (Block : 248/300, Scanned Size : 13.0K)
+[CSD Merge Manager] Merging Block ... (Current Buffer Size : 7.2K)
+[CSD Merge Manager] Merging Block ... (Current Buffer Size : 9.0K)
+[CSD Merge Manager] Merging Block ... (Current Buffer Size : 10.8K)
+[CSD Merge Manager] Merging Block ... (Current Buffer Size : 12.6K)
+[CSD Merge Manager] Merging Block ... (Current Buffer Size : 14.4K)
+[CSD Merge Manager] Merging Block ... (Current Buffer Size : 16.2K)
+[CSD Merge Manager] Merging Block ... (Current Buffer Size : 18.0K)
+[CSD Merge Manager] Merging Block ... (Current Buffer Size : 19.8K)
+[CSD Merge Manager] Merging Block ... (Current Buffer Size : 21.6K)
+[CSD Merge Manager] Merging Block ... (Current Buffer Size : 23.5K)
+[CSD Merge Manager] Merging Block ... (Current Buffer Size : 25.2K)
+[CSD Merge Manager] Merging Block ... (Current Buffer Size : 27.0K)
+[CSD Merge Manager] Merging Block ... (Current Buffer Size : 28.9K)
+[CSD Merge Manager] Merging Block ... (Current Buffer Size : 29.3K)
+
+root@keti-csd-120:~/csd-worker-module/opencsd-storage-node11/keti# ./main sstfile/lineitem/001420.sst
+---------------------------------------------:: STEP3 ::---------------------------------------------
+[CSD Input Interface] Recieve Snippet {ID : 3-1} from Storage Engine Instance
+[CSD Scan] Scanning Data ... (Block : 15/300, Scanned Size : 52.9K)
+[CSD Scan] Scanning Data ... (Block : 30/300, Scanned Size : 53.0K)
+[CSD Scan] Scanning Data ... (Block : 45/300, Scanned Size : 52.9K)
+[CSD Scan] Scanning Data ... (Block : 60/300, Scanned Size : 52.9K)
+[CSD Scan] Scanning Data ... (Block : 75/300, Scanned Size : 52.9K)
+[CSD Merge Manager] Merging Block ... (Current Buffer Size : 1.8K)
+[CSD Scan] Scanning Data ... (Block : 90/300, Scanned Size : 53.0K)
+[CSD Scan] Scanning Data ... (Block : 105/300, Scanned Size : 53.0K)
+[CSD Scan] Scanning Data ... (Block : 120/300, Scanned Size : 52.9K)
+[CSD Scan] Scanning Data ... (Block : 135/300, Scanned Size : 52.9K)
+[CSD Merge Manager] Merging Block ... (Current Buffer Size : 3.6K)
+[CSD Scan] Scanning Data ... (Block : 150/300, Scanned Size : 52.9K)
+[CSD Scan] Scanning Data ... (Block : 165/300, Scanned Size : 53.0K)
+[CSD Scan] Scanning Data ... (Block : 180/300, Scanned Size : 53.0K)
+[CSD Merge Manager] Merging Block ... (Current Buffer Size : 5.4K)
+[CSD Scan] Scanning Data ... (Block : 195/300, Scanned Size : 52.9K)
+[CSD Scan] Scanning Data ... (Block : 210/300, Scanned Size : 53.0K)
+[CSD Scan] Scanning Data ... (Block : 225/300, Scanned Size : 53.0K)
+[CSD Merge Manager] Merging Block ... (Current Buffer Size : 7.2K)
+[CSD Scan] Scanning Data ... (Block : 240/300, Scanned Size : 53.0K)
+[CSD Scan] Scanning Data ... (Block : 248/300, Scanned Size : 12.3K)
+[CSD Merge Manager] Merging Block ... (Current Buffer Size : 9.0K)
+[CSD Merge Manager] Merging Block ... (Current Buffer Size : 10.8K)
+[CSD Merge Manager] Merging Block ... (Current Buffer Size : 12.6K)
+[CSD Merge Manager] Merging Block ... (Current Buffer Size : 14.4K)
+[CSD Merge Manager] Merging Block ... (Current Buffer Size : 16.2K)
+[CSD Merge Manager] Merging Block ... (Current Buffer Size : 18.0K)
+[CSD Merge Manager] Merging Block ... (Current Buffer Size : 19.9K)
+[CSD Merge Manager] Merging Block ... (Current Buffer Size : 21.6K)
+[CSD Merge Manager] Merging Block ... (Current Buffer Size : 23.5K)
+[CSD Merge Manager] Merging Block ... (Current Buffer Size : 25.3K)
+[CSD Merge Manager] Merging Block ... (Current Buffer Size : 27.1K)
+[CSD Merge Manager] Merging Block ... (Current Buffer Size : 28.9K)
+[CSD Merge Manager] Merging Block ... (Current Buffer Size : 29.3K)
+
+root@keti-csd-120:~/csd-worker-module/opencsd-storage-node11/keti# ./main sstfile/lineitem/001436.sst
+---------------------------------------------:: STEP3 ::---------------------------------------------
+[CSD Input Interface] Recieve Snippet {ID : 3-1} from Storage Engine Instance
+[CSD Scan] Scanning Data ... (Block : 15/300, Scanned Size : 53.0K)
+[CSD Scan] Scanning Data ... (Block : 30/300, Scanned Size : 53.0K)
+[CSD Scan] Scanning Data ... (Block : 45/300, Scanned Size : 52.9K)
+[CSD Scan] Scanning Data ... (Block : 60/300, Scanned Size : 52.9K)
+[CSD Scan] Scanning Data ... (Block : 75/300, Scanned Size : 52.9K)
+[CSD Merge Manager] Merging Block ... (Current Buffer Size : 1.8K)
+[CSD Scan] Scanning Data ... (Block : 90/300, Scanned Size : 52.9K)
+[CSD Scan] Scanning Data ... (Block : 105/300, Scanned Size : 53.0K)
+[CSD Scan] Scanning Data ... (Block : 120/300, Scanned Size : 53.0K)
+[CSD Scan] Scanning Data ... (Block : 135/300, Scanned Size : 52.9K)
+[CSD Merge Manager] Merging Block ... (Current Buffer Size : 3.6K)
+[CSD Scan] Scanning Data ... (Block : 150/300, Scanned Size : 52.9K)
+[CSD Scan] Scanning Data ... (Block : 165/300, Scanned Size : 52.9K)
+[CSD Scan] Scanning Data ... (Block : 180/300, Scanned Size : 53.0K)
+[CSD Scan] Scanning Data ... (Block : 195/300, Scanned Size : 52.9K)
+[CSD Merge Manager] Merging Block ... (Current Buffer Size : 5.4K)
+[CSD Scan] Scanning Data ... (Block : 210/300, Scanned Size : 52.9K)
+[CSD Scan] Scanning Data ... (Block : 225/300, Scanned Size : 52.9K)
+[CSD Scan] Scanning Data ... (Block : 240/300, Scanned Size : 53.0K)
+[CSD Scan] Scanning Data ... (Block : 248/300, Scanned Size : 14.6K)
+[CSD Merge Manager] Merging Block ... (Current Buffer Size : 7.2K)
+[CSD Merge Manager] Merging Block ... (Current Buffer Size : 9.0K)
+[CSD Merge Manager] Merging Block ... (Current Buffer Size : 10.8K)
+[CSD Merge Manager] Merging Block ... (Current Buffer Size : 12.6K)
+[CSD Merge Manager] Merging Block ... (Current Buffer Size : 14.4K)
+[CSD Merge Manager] Merging Block ... (Current Buffer Size : 16.2K)
+[CSD Merge Manager] Merging Block ... (Current Buffer Size : 18.0K)
+[CSD Merge Manager] Merging Block ... (Current Buffer Size : 19.8K)
+[CSD Merge Manager] Merging Block ... (Current Buffer Size : 21.6K)
+[CSD Merge Manager] Merging Block ... (Current Buffer Size : 23.4K)
+[CSD Merge Manager] Merging Block ... (Current Buffer Size : 25.2K)
+[CSD Merge Manager] Merging Block ... (Current Buffer Size : 27.0K)
+[CSD Merge Manager] Merging Block ... (Current Buffer Size : 28.8K)
+[CSD Merge Manager] Merging Block ... (Current Buffer Size : 29.3K)
+
+root@keti-csd-120:~/csd-worker-module/opencsd-storage-node11/keti# ./main sstfile/lineitem/001452.sst
+---------------------------------------------:: STEP3 ::---------------------------------------------
+[CSD Input Interface] Recieve Snippet {ID : 3-1} from Storage Engine Instance
+[CSD Scan] Scanning Data ... (Block : 15/300, Scanned Size : 53.0K)
+[CSD Scan] Scanning Data ... (Block : 30/300, Scanned Size : 52.9K)
+[CSD Scan] Scanning Data ... (Block : 45/300, Scanned Size : 53.0K)
+[CSD Scan] Scanning Data ... (Block : 60/300, Scanned Size : 53.0K)
+[CSD Scan] Scanning Data ... (Block : 75/300, Scanned Size : 52.9K)
+[CSD Merge Manager] Merging Block ... (Current Buffer Size : 1.8K)
+[CSD Scan] Scanning Data ... (Block : 90/300, Scanned Size : 53.0K)
+[CSD Scan] Scanning Data ... (Block : 105/300, Scanned Size : 53.0K)
+[CSD Scan] Scanning Data ... (Block : 120/300, Scanned Size : 53.0K)
+[CSD Scan] Scanning Data ... (Block : 135/300, Scanned Size : 53.0K)
+[CSD Merge Manager] Merging Block ... (Current Buffer Size : 3.6K)
+[CSD Scan] Scanning Data ... (Block : 150/300, Scanned Size : 52.9K)
+[CSD Scan] Scanning Data ... (Block : 165/300, Scanned Size : 52.9K)
+[CSD Scan] Scanning Data ... (Block : 180/300, Scanned Size : 52.9K)
+[CSD Scan] Scanning Data ... (Block : 195/300, Scanned Size : 53.0K)
+[CSD Merge Manager] Merging Block ... (Current Buffer Size : 5.4K)
+[CSD Scan] Scanning Data ... (Block : 210/300, Scanned Size : 53.0K)
+[CSD Scan] Scanning Data ... (Block : 225/300, Scanned Size : 53.0K)
+[CSD Scan] Scanning Data ... (Block : 240/300, Scanned Size : 53.0K)
+[CSD Scan] Scanning Data ... (Block : 248/300, Scanned Size : 15.4K)
+[CSD Merge Manager] Merging Block ... (Current Buffer Size : 7.2K)
+[CSD Merge Manager] Merging Block ... (Current Buffer Size : 9.0K)
+[CSD Merge Manager] Merging Block ... (Current Buffer Size : 10.8K)
+[CSD Merge Manager] Merging Block ... (Current Buffer Size : 12.6K)
+[CSD Merge Manager] Merging Block ... (Current Buffer Size : 14.4K)
+[CSD Merge Manager] Merging Block ... (Current Buffer Size : 16.2K)
+[CSD Merge Manager] Merging Block ... (Current Buffer Size : 18.0K)
+[CSD Merge Manager] Merging Block ... (Current Buffer Size : 19.8K)
+[CSD Merge Manager] Merging Block ... (Current Buffer Size : 21.6K)
+[CSD Merge Manager] Merging Block ... (Current Buffer Size : 23.4K)
+[CSD Merge Manager] Merging Block ... (Current Buffer Size : 25.2K)
+[CSD Merge Manager] Merging Block ... (Current Buffer Size : 27.0K)
+[CSD Merge Manager] Merging Block ... (Current Buffer Size : 28.8K)
+[CSD Merge Manager] Merging Block ... (Current Buffer Size : 29.3K)
+
+root@keti-csd-120:~/csd-worker-module/opencsd-storage-node11/keti# ./main sstfile/lineitem/001468.sst
+---------------------------------------------:: STEP3 ::---------------------------------------------
+[CSD Input Interface] Recieve Snippet {ID : 3-1} from Storage Engine Instance
+[CSD Scan] Scanning Data ... (Block : 15/300, Scanned Size : 52.9K)
+[CSD Scan] Scanning Data ... (Block : 30/300, Scanned Size : 53.0K)
+[CSD Scan] Scanning Data ... (Block : 45/300, Scanned Size : 53.0K)
+[CSD Scan] Scanning Data ... (Block : 60/300, Scanned Size : 52.9K)
+[CSD Scan] Scanning Data ... (Block : 75/300, Scanned Size : 52.9K)
+[CSD Scan] Scanning Data ... (Block : 90/300, Scanned Size : 52.9K)
+[CSD Scan] Scanning Data ... (Block : 105/300, Scanned Size : 52.9K)
+[CSD Scan] Scanning Data ... (Block : 120/300, Scanned Size : 52.9K)
+[CSD Merge Manager] Merging Block ... (Current Buffer Size : 1.8K)
+[CSD Scan] Scanning Data ... (Block : 135/300, Scanned Size : 53.0K)
+[CSD Scan] Scanning Data ... (Block : 150/300, Scanned Size : 53.0K)
+[CSD Scan] Scanning Data ... (Block : 165/300, Scanned Size : 53.0K)
+[CSD Scan] Scanning Data ... (Block : 180/300, Scanned Size : 53.0K)
+[CSD Scan] Scanning Data ... (Block : 195/300, Scanned Size : 53.0K)
+[CSD Scan] Scanning Data ... (Block : 210/300, Scanned Size : 53.0K)
+[CSD Scan] Scanning Data ... (Block : 225/300, Scanned Size : 53.0K)
+[CSD Scan] Scanning Data ... (Block : 240/300, Scanned Size : 52.9K)
+[CSD Merge Manager] Merging Block ... (Current Buffer Size : 3.6K)
+[CSD Scan] Scanning Data ... (Block : 248/300, Scanned Size : 13.6K)
+[CSD Merge Manager] Merging Block ... (Current Buffer Size : 5.4K)
+[CSD Merge Manager] Merging Block ... (Current Buffer Size : 7.2K)
+[CSD Merge Manager] Merging Block ... (Current Buffer Size : 9.0K)
+[CSD Merge Manager] Merging Block ... (Current Buffer Size : 10.8K)
+[CSD Merge Manager] Merging Block ... (Current Buffer Size : 12.6K)
+[CSD Merge Manager] Merging Block ... (Current Buffer Size : 14.4K)
+[CSD Merge Manager] Merging Block ... (Current Buffer Size : 16.2K)
+[CSD Merge Manager] Merging Block ... (Current Buffer Size : 18.0K)
+[CSD Merge Manager] Merging Block ... (Current Buffer Size : 19.8K)
+[CSD Merge Manager] Merging Block ... (Current Buffer Size : 21.6K)
+[CSD Merge Manager] Merging Block ... (Current Buffer Size : 23.4K)
+[CSD Merge Manager] Merging Block ... (Current Buffer Size : 25.2K)
+[CSD Merge Manager] Merging Block ... (Current Buffer Size : 27.0K)
+[CSD Merge Manager] Merging Block ... (Current Buffer Size : 28.8K)
+[CSD Merge Manager] Merging Block ... (Current Buffer Size : 29.3K)
+
+root@keti-csd-120:~/csd-worker-module/opencsd-storage-node11/keti# ./main sstfile/lineitem/001484.sst
+---------------------------------------------:: STEP3 ::---------------------------------------------
+[CSD Input Interface] Recieve Snippet {ID : 3-1} from Storage Engine Instance
+[CSD Scan] Scanning Data ... (Block : 15/300, Scanned Size : 53.0K)
+[CSD Scan] Scanning Data ... (Block : 30/300, Scanned Size : 52.9K)
+[CSD Scan] Scanning Data ... (Block : 45/300, Scanned Size : 52.9K)
+[CSD Scan] Scanning Data ... (Block : 60/300, Scanned Size : 52.9K)
+[CSD Scan] Scanning Data ... (Block : 75/300, Scanned Size : 53.0K)
+[CSD Merge Manager] Merging Block ... (Current Buffer Size : 1.8K)
+[CSD Scan] Scanning Data ... (Block : 90/300, Scanned Size : 52.9K)
+[CSD Scan] Scanning Data ... (Block : 105/300, Scanned Size : 52.9K)
+[CSD Scan] Scanning Data ... (Block : 120/300, Scanned Size : 53.0K)
+[CSD Scan] Scanning Data ... (Block : 135/300, Scanned Size : 52.9K)
+[CSD Merge Manager] Merging Block ... (Current Buffer Size : 3.6K)
+[CSD Scan] Scanning Data ... (Block : 150/300, Scanned Size : 53.0K)
+[CSD Scan] Scanning Data ... (Block : 165/300, Scanned Size : 52.9K)
+[CSD Scan] Scanning Data ... (Block : 180/300, Scanned Size : 53.0K)
+[CSD Scan] Scanning Data ... (Block : 195/300, Scanned Size : 52.9K)
+[CSD Merge Manager] Merging Block ... (Current Buffer Size : 5.4K)
+[CSD Scan] Scanning Data ... (Block : 210/300, Scanned Size : 52.9K)
+[CSD Scan] Scanning Data ... (Block : 225/300, Scanned Size : 53.0K)
+[CSD Scan] Scanning Data ... (Block : 240/300, Scanned Size : 52.9K)
+[CSD Scan] Scanning Data ... (Block : 248/300, Scanned Size : 14.6K)
+[CSD Merge Manager] Merging Block ... (Current Buffer Size : 7.2K)
+[CSD Merge Manager] Merging Block ... (Current Buffer Size : 9.0K)
+[CSD Merge Manager] Merging Block ... (Current Buffer Size : 10.8K)
+[CSD Merge Manager] Merging Block ... (Current Buffer Size : 12.6K)
+[CSD Merge Manager] Merging Block ... (Current Buffer Size : 14.4K)
+[CSD Merge Manager] Merging Block ... (Current Buffer Size : 16.2K)
+[CSD Merge Manager] Merging Block ... (Current Buffer Size : 18.0K)
+[CSD Merge Manager] Merging Block ... (Current Buffer Size : 19.8K)
+[CSD Merge Manager] Merging Block ... (Current Buffer Size : 21.6K)
+[CSD Merge Manager] Merging Block ... (Current Buffer Size : 23.4K)
+[CSD Merge Manager] Merging Block ... (Current Buffer Size : 25.2K)
+[CSD Merge Manager] Merging Block ... (Current Buffer Size : 27.0K)
+[CSD Merge Manager] Merging Block ... (Current Buffer Size : 28.8K)
+[CSD Merge Manager] Merging Block ... (Current Buffer Size : 29.3K)
+
+root@keti-csd-120:~/csd-worker-module/opencsd-storage-node11/keti# ./main sstfile/lineitem/001490.sst
+---------------------------------------------:: STEP3 ::---------------------------------------------
+[CSD Input Interface] Recieve Snippet {ID : 3-1} from Storage Engine Instance
+[CSD Scan] Scanning Data ... (Block : 15/300, Scanned Size : 52.9K)
+[CSD Scan] Scanning Data ... (Block : 30/300, Scanned Size : 53.0K)
+[CSD Scan] Scanning Data ... (Block : 45/300, Scanned Size : 53.0K)
+[CSD Scan] Scanning Data ... (Block : 60/300, Scanned Size : 52.9K)
+[CSD Scan] Scanning Data ... (Block : 75/300, Scanned Size : 53.0K)
+[CSD Merge Manager] Merging Block ... (Current Buffer Size : 1.8K)
+[CSD Scan] Scanning Data ... (Block : 90/300, Scanned Size : 52.9K)
+[CSD Scan] Scanning Data ... (Block : 105/300, Scanned Size : 52.9K)
+[CSD Scan] Scanning Data ... (Block : 120/300, Scanned Size : 52.9K)
+[CSD Scan] Scanning Data ... (Block : 135/300, Scanned Size : 52.9K)
+[CSD Merge Manager] Merging Block ... (Current Buffer Size : 3.6K)
+[CSD Scan] Scanning Data ... (Block : 150/300, Scanned Size : 52.9K)
+[CSD Scan] Scanning Data ... (Block : 165/300, Scanned Size : 53.0K)
+[CSD Scan] Scanning Data ... (Block : 180/300, Scanned Size : 52.9K)
+[CSD Scan] Scanning Data ... (Block : 195/300, Scanned Size : 52.9K)
+[CSD Scan] Scanning Data ... (Block : 210/300, Scanned Size : 53.0K)
+[CSD Scan] Scanning Data ... (Block : 225/300, Scanned Size : 53.0K)
+[CSD Merge Manager] Merging Block ... (Current Buffer Size : 5.4K)
+[CSD Scan] Scanning Data ... (Block : 240/300, Scanned Size : 53.0K)
+[CSD Scan] Scanning Data ... (Block : 248/300, Scanned Size : 14.2K)
+[CSD Merge Manager] Merging Block ... (Current Buffer Size : 7.2K)
+[CSD Merge Manager] Merging Block ... (Current Buffer Size : 9.0K)
+[CSD Merge Manager] Merging Block ... (Current Buffer Size : 10.8K)
+[CSD Merge Manager] Merging Block ... (Current Buffer Size : 12.6K)
+[CSD Merge Manager] Merging Block ... (Current Buffer Size : 14.4K)
+[CSD Merge Manager] Merging Block ... (Current Buffer Size : 16.2K)
+[CSD Merge Manager] Merging Block ... (Current Buffer Size : 18.0K)
+[CSD Merge Manager] Merging Block ... (Current Buffer Size : 19.8K)
+[CSD Merge Manager] Merging Block ... (Current Buffer Size : 21.6K)
+[CSD Merge Manager] Merging Block ... (Current Buffer Size : 23.4K)
+[CSD Merge Manager] Merging Block ... (Current Buffer Size : 25.2K)
+[CSD Merge Manager] Merging Block ... (Current Buffer Size : 27.0K)
+[CSD Merge Manager] Merging Block ... (Current Buffer Size : 28.8K)
+[CSD Merge Manager] Merging Block ... (Current Buffer Size : 29.3K)
+
+root@keti-csd-120:~/csd-worker-module/opencsd-storage-node11/keti# ./main sstfile/nation/001159.sst
+---------------------------------------------:: STEP3 ::---------------------------------------------
+[CSD Input Interface] Recieve Snippet {ID : 4-5} from Storage Engine Instance
+[CSD Scan] Scanning Data ... (Block : 8/300, Scanned Size : 2.7K)
+[CSD Merge Manager] Merging Block ... (Current Buffer Size : 0.8K)
+
+root@keti-csd-120:~/csd-worker-module/opencsd-storage-node11/keti# ./main sstfile/orders/001533.sst
+---------------------------------------------:: STEP3 ::---------------------------------------------
+[CSD Input Interface] Recieve Snippet {ID : 3-0} from Storage Engine Instance
+[CSD Scan] Scanning Data ... (Block : 15/300, Scanned Size : 53.0K)
+[CSD Scan] Scanning Data ... (Block : 30/300, Scanned Size : 52.9K)
+[CSD Scan] Scanning Data ... (Block : 45/300, Scanned Size : 52.9K)
+[CSD Scan] Scanning Data ... (Block : 53/300, Scanned Size : 28.1K)
+[CSD Merge Manager] Merging Block ... (Current Buffer Size : 9.8K)
+[CSD Merge Manager] Merging Block ... (Current Buffer Size : 19.7K)
+[CSD Merge Manager] Merging Block ... (Current Buffer Size : 29.5K)
+[CSD Merge Manager] Merging Block ... (Current Buffer Size : 34.8K)
+
+root@keti-csd-120:~/csd-worker-module/opencsd-storage-node11/keti# ./main sstfile/orders/001548.sst
+---------------------------------------------:: STEP3 ::---------------------------------------------
+[CSD Input Interface] Recieve Snippet {ID : 3-0} from Storage Engine Instance
+[CSD Scan] Scanning Data ... (Block : 15/300, Scanned Size : 52.9K)
+[CSD Scan] Scanning Data ... (Block : 30/300, Scanned Size : 53.0K)
+[CSD Scan] Scanning Data ... (Block : 45/300, Scanned Size : 52.9K)
+[CSD Scan] Scanning Data ... (Block : 53/300, Scanned Size : 27.3K)
+[CSD Merge Manager] Merging Block ... (Current Buffer Size : 9.9K)
+[CSD Merge Manager] Merging Block ... (Current Buffer Size : 19.8K)
+[CSD Merge Manager] Merging Block ... (Current Buffer Size : 29.7K)
+[CSD Merge Manager] Merging Block ... (Current Buffer Size : 34.8K)
+
+root@keti-csd-120:~/csd-worker-module/opencsd-storage-node11/keti# ./main sstfile/orders/001576.sst
+---------------------------------------------:: STEP3 ::---------------------------------------------
+[CSD Input Interface] Recieve Snippet {ID : 3-0} from Storage Engine Instance
+[CSD Scan] Scanning Data ... (Block : 15/300, Scanned Size : 52.9K)
+[CSD Scan] Scanning Data ... (Block : 30/300, Scanned Size : 52.9K)
+[CSD Scan] Scanning Data ... (Block : 45/300, Scanned Size : 53.0K)
+[CSD Scan] Scanning Data ... (Block : 53/300, Scanned Size : 29.6K)
+[CSD Merge Manager] Merging Block ... (Current Buffer Size : 9.8K)
+[CSD Merge Manager] Merging Block ... (Current Buffer Size : 19.6K)
+[CSD Merge Manager] Merging Block ... (Current Buffer Size : 29.3K)
+[CSD Merge Manager] Merging Block ... (Current Buffer Size : 34.8K)
+
+root@keti-csd-120:~/csd-worker-module/opencsd-storage-node11/keti# ./main sstfile/orders/001591.sst
+---------------------------------------------:: STEP3 ::---------------------------------------------
+[CSD Input Interface] Recieve Snippet {ID : 3-0} from Storage Engine Instance
+[CSD Scan] Scanning Data ... (Block : 15/300, Scanned Size : 53.0K)
+[CSD Scan] Scanning Data ... (Block : 30/300, Scanned Size : 53.0K)
+[CSD Scan] Scanning Data ... (Block : 45/300, Scanned Size : 52.9K)
+[CSD Scan] Scanning Data ... (Block : 53/300, Scanned Size : 28.9K)
+[CSD Merge Manager] Merging Block ... (Current Buffer Size : 9.8K)
+[CSD Merge Manager] Merging Block ... (Current Buffer Size : 19.6K)
+[CSD Merge Manager] Merging Block ... (Current Buffer Size : 29.5K)
+[CSD Merge Manager] Merging Block ... (Current Buffer Size : 34.8K)
+
+root@keti-csd-120:~/csd-worker-module/opencsd-storage-node11/keti# ./main sstfile/orders/001607.sst
+---------------------------------------------:: STEP3 ::---------------------------------------------
+[CSD Input Interface] Recieve Snippet {ID : 3-0} from Storage Engine Instance
+[CSD Scan] Scanning Data ... (Block : 15/300, Scanned Size : 53.0K)
+[CSD Scan] Scanning Data ... (Block : 30/300, Scanned Size : 52.9K)
+[CSD Scan] Scanning Data ... (Block : 45/300, Scanned Size : 53.0K)
+[CSD Scan] Scanning Data ... (Block : 53/300, Scanned Size : 30.9K)
+[CSD Merge Manager] Merging Block ... (Current Buffer Size : 9.7K)
+[CSD Merge Manager] Merging Block ... (Current Buffer Size : 19.4K)
+[CSD Merge Manager] Merging Block ... (Current Buffer Size : 29.1K)
+[CSD Merge Manager] Merging Block ... (Current Buffer Size : 34.8K)
+
+root@keti-csd-120:~/csd-worker-module/opencsd-storage-node11/keti# ./main sstfile/orders/001622.sst
+---------------------------------------------:: STEP3 ::---------------------------------------------
+[CSD Input Interface] Recieve Snippet {ID : 3-0} from Storage Engine Instance
+[CSD Scan] Scanning Data ... (Block : 15/300, Scanned Size : 53.0K)
+[CSD Scan] Scanning Data ... (Block : 30/300, Scanned Size : 53.0K)
+[CSD Scan] Scanning Data ... (Block : 45/300, Scanned Size : 53.0K)
+[CSD Scan] Scanning Data ... (Block : 53/300, Scanned Size : 29.2K)
+[CSD Merge Manager] Merging Block ... (Current Buffer Size : 9.8K)
+[CSD Merge Manager] Merging Block ... (Current Buffer Size : 19.6K)
+[CSD Merge Manager] Merging Block ... (Current Buffer Size : 29.4K)
+[CSD Merge Manager] Merging Block ... (Current Buffer Size : 34.8K)
+
+root@keti-csd-120:~/csd-worker-module/opencsd-storage-node11/keti# ./main sstfile/orders/001638.sst
+---------------------------------------------:: STEP3 ::---------------------------------------------
+[CSD Input Interface] Recieve Snippet {ID : 3-0} from Storage Engine Instance
+[CSD Scan] Scanning Data ... (Block : 15/300, Scanned Size : 52.9K)
+[CSD Scan] Scanning Data ... (Block : 30/300, Scanned Size : 52.9K)
+[CSD Scan] Scanning Data ... (Block : 45/300, Scanned Size : 53.0K)
+[CSD Scan] Scanning Data ... (Block : 53/300, Scanned Size : 27.9K)
+[CSD Merge Manager] Merging Block ... (Current Buffer Size : 9.9K)
+[CSD Merge Manager] Merging Block ... (Current Buffer Size : 19.8K)
+[CSD Merge Manager] Merging Block ... (Current Buffer Size : 29.6K)
+[CSD Merge Manager] Merging Block ... (Current Buffer Size : 34.8K)
+
+root@keti-csd-120:~/csd-worker-module/opencsd-storage-node11/keti# ./main sstfile/orders/001653.sst
+---------------------------------------------:: STEP3 ::---------------------------------------------
+[CSD Input Interface] Recieve Snippet {ID : 3-0} from Storage Engine Instance
+[CSD Scan] Scanning Data ... (Block : 15/300, Scanned Size : 53.0K)
+[CSD Scan] Scanning Data ... (Block : 30/300, Scanned Size : 53.0K)
+[CSD Scan] Scanning Data ... (Block : 45/300, Scanned Size : 52.9K)
+[CSD Scan] Scanning Data ... (Block : 53/300, Scanned Size : 28.5K)
+[CSD Merge Manager] Merging Block ... (Current Buffer Size : 9.9K)
+[CSD Merge Manager] Merging Block ... (Current Buffer Size : 19.8K)
+[CSD Merge Manager] Merging Block ... (Current Buffer Size : 29.6K)
+[CSD Merge Manager] Merging Block ... (Current Buffer Size : 34.8K)
+
+root@keti-csd-120:~/csd-worker-module/opencsd-storage-node11/keti# ./main sstfile/part/000895.sst
+---------------------------------------------:: STEP3 ::---------------------------------------------
+[CSD Input Interface] Recieve Snippet {ID : 1-2} from Storage Engine Instance
+[CSD Scan] Scanning Data ... (Block : 8/300, Scanned Size : 31.8K)
+[CSD Merge Manager] Merging Block ... (Current Buffer Size : 7.1K)
+
+root@keti-csd-120:~/csd-worker-module/opencsd-storage-node11/keti# ./main sstfile/part/000911.sst
+---------------------------------------------:: STEP3 ::---------------------------------------------
+[CSD Input Interface] Recieve Snippet {ID : 1-2} from Storage Engine Instance
+[CSD Scan] Scanning Data ... (Block : 8/300, Scanned Size : 31.8K)
+[CSD Merge Manager] Merging Block ... (Current Buffer Size : 7.1K)
+
+root@keti-csd-120:~/csd-worker-module/opencsd-storage-node11/keti# ./main sstfile/part/000926.sst
+---------------------------------------------:: STEP3 ::---------------------------------------------
+[CSD Input Interface] Recieve Snippet {ID : 1-2} from Storage Engine Instance
+[CSD Scan] Scanning Data ... (Block : 8/300, Scanned Size : 31.6K)
+[CSD Merge Manager] Merging Block ... (Current Buffer Size : 7.1K)
+
+root@keti-csd-120:~/csd-worker-module/opencsd-storage-node11/keti# ./main sstfile/part/000942.sst
+---------------------------------------------:: STEP3 ::---------------------------------------------
+[CSD Input Interface] Recieve Snippet {ID : 1-2} from Storage Engine Instance
+[CSD Scan] Scanning Data ... (Block : 8/300, Scanned Size : 31.6K)
+[CSD Merge Manager] Merging Block ... (Current Buffer Size : 7.1K)
+
+root@keti-csd-120:~/csd-worker-module/opencsd-storage-node11/keti# ./main sstfile/part/000957.sst
+---------------------------------------------:: STEP3 ::---------------------------------------------
+[CSD Input Interface] Recieve Snippet {ID : 1-2} from Storage Engine Instance
+[CSD Scan] Scanning Data ... (Block : 8/300, Scanned Size : 31.8K)
+[CSD Merge Manager] Merging Block ... (Current Buffer Size : 7.1K)
+
+root@keti-csd-120:~/csd-worker-module/opencsd-storage-node11/keti# ./main sstfile/part/000973.sst
+---------------------------------------------:: STEP3 ::---------------------------------------------
+[CSD Input Interface] Recieve Snippet {ID : 1-2} from Storage Engine Instance
+[CSD Scan] Scanning Data ... (Block : 8/300, Scanned Size : 31.7K)
+[CSD Merge Manager] Merging Block ... (Current Buffer Size : 7.1K)
+
+root@keti-csd-120:~/csd-worker-module/opencsd-storage-node11/keti# ./main sstfile/part/000988.sst
+---------------------------------------------:: STEP3 ::---------------------------------------------
+[CSD Input Interface] Recieve Snippet {ID : 1-2} from Storage Engine Instance
+[CSD Scan] Scanning Data ... (Block : 8/300, Scanned Size : 31.6K)
+[CSD Merge Manager] Merging Block ... (Current Buffer Size : 7.1K)
+
+root@keti-csd-120:~/csd-worker-module/opencsd-storage-node11/keti# ./main sstfile/part/001004.sst
+---------------------------------------------:: STEP3 ::---------------------------------------------
+[CSD Input Interface] Recieve Snippet {ID : 1-2} from Storage Engine Instance
+[CSD Scan] Scanning Data ... (Block : 8/300, Scanned Size : 31.6K)
+[CSD Merge Manager] Merging Block ... (Current Buffer Size : 7.1K)
+
+root@keti-csd-120:~/csd-worker-module/opencsd-storage-node11/keti# ./main sstfile/partsupp/001019.sst
+---------------------------------------------:: STEP3 ::---------------------------------------------
+[CSD Input Interface] Recieve Snippet {ID : 1-4} from Storage Engine Instance
+[CSD Scan] Scanning Data ... (Block : 15/300, Scanned Size : 52.9K)
+[CSD Scan] Scanning Data ... (Block : 30/300, Scanned Size : 52.9K)
+[CSD Scan] Scanning Data ... (Block : 38/300, Scanned Size : 33.8K)
+[CSD Merge Manager] Merging Block ... (Current Buffer Size : 5.5K)
+[CSD Merge Manager] Merging Block ... (Current Buffer Size : 11.0K)
+[CSD Merge Manager] Merging Block ... (Current Buffer Size : 14.6K)
+
+root@keti-csd-120:~/csd-worker-module/opencsd-storage-node11/keti# ./main sstfile/partsupp/001035.sst
+---------------------------------------------:: STEP3 ::---------------------------------------------
+[CSD Input Interface] Recieve Snippet {ID : 1-4} from Storage Engine Instance
+[CSD Scan] Scanning Data ... (Block : 15/300, Scanned Size : 53.0K)
+[CSD Scan] Scanning Data ... (Block : 30/300, Scanned Size : 52.8K)
+[CSD Scan] Scanning Data ... (Block : 38/300, Scanned Size : 37.0K)
+[CSD Merge Manager] Merging Block ... (Current Buffer Size : 5.5K)
+[CSD Merge Manager] Merging Block ... (Current Buffer Size : 10.9K)
+[CSD Merge Manager] Merging Block ... (Current Buffer Size : 14.6K)
+
+root@keti-csd-120:~/csd-worker-module/opencsd-storage-node11/keti# ./main sstfile/partsupp/001050.sst
+---------------------------------------------:: STEP3 ::---------------------------------------------
+[CSD Input Interface] Recieve Snippet {ID : 3-0} from Storage Engine Instance
+[CSD Scan] Scanning Data ... (Block : 15/53, Scanned Size : 52.9K)
+[CSD Scan] Scanning Data ... (Block : 30/53, Scanned Size : 52.8K)
+[CSD Scan] Scanning Data ... (Block : 53/53, Scanned Size : 35.3K)
+[CSD Filter] Filtering Data ... (Filtered Size : 0.0K)
+[CSD Filter] Filtering Data ... (Filtered Size : 0.0K)
+[CSD Merge Manager] Merging Block ... (Current Buffer Size : 0.0K)
+[CSD Merge Manager] Merging Block ... (Current Buffer Size : 0.0K)
+[CSD Filter] Filtering Data ... (Filtered Size : 0.0K)
+[CSD Merge Manager] Merging Block ... (Current Buffer Size : 0.0K)
+[CSD Merge Manager] Merging Block {ID : 3-0} Done (Block :53/53)
+[CSD Return Interface] Send Data to Buffer Manager (Return Buffer Size : 0.0K)
+
+root@keti-csd-120:~/csd-worker-module/opencsd-storage-node11/keti# ./main sstfile/partsupp/001066.sst
+---------------------------------------------:: STEP3 ::---------------------------------------------
+[CSD Input Interface] Recieve Snippet {ID : 3-0} from Storage Engine Instance
+[CSD Scan] Scanning Data ... (Block : 15/53, Scanned Size : 52.8K)
+[CSD Scan] Scanning Data ... (Block : 30/53, Scanned Size : 52.9K)
+[CSD Scan] Scanning Data ... (Block : 53/53, Scanned Size : 34.1K)
+[CSD Filter] Filtering Data ... (Filtered Size : 0.0K)
+[CSD Filter] Filtering Data ... (Filtered Size : 0.0K)
+[CSD Merge Manager] Merging Block ... (Current Buffer Size : 0.0K)
+[CSD Merge Manager] Merging Block ... (Current Buffer Size : 0.0K)
+[CSD Filter] Filtering Data ... (Filtered Size : 0.0K)
+[CSD Merge Manager] Merging Block ... (Current Buffer Size : 0.0K)
+[CSD Merge Manager] Merging Block {ID : 3-0} Done (Block :53/53)
+[CSD Return Interface] Send Data to Buffer Manager (Return Buffer Size : 0.0K)
+
+root@keti-csd-120:~/csd-worker-module/opencsd-storage-node11/keti# ./main sstfile/partsupp/001081.sst
+---------------------------------------------:: STEP3 ::---------------------------------------------
+[CSD Input Interface] Recieve Snippet {ID : 3-0} from Storage Engine Instance
+[CSD Scan] Scanning Data ... (Block : 15/53, Scanned Size : 52.9K)
+[CSD Scan] Scanning Data ... (Block : 30/53, Scanned Size : 52.9K)
+[CSD Scan] Scanning Data ... (Block : 53/53, Scanned Size : 35.6K)
+[CSD Filter] Filtering Data ... (Filtered Size : 0.0K)
+[CSD Merge Manager] Merging Block ... (Current Buffer Size : 0.0K)
+[CSD Filter] Filtering Data ... (Filtered Size : 0.0K)
+[CSD Merge Manager] Merging Block ... (Current Buffer Size : 0.0K)
+[CSD Filter] Filtering Data ... (Filtered Size : 0.0K)
+[CSD Merge Manager] Merging Block ... (Current Buffer Size : 0.0K)
+[CSD Merge Manager] Merging Block {ID : 3-0} Done (Block :53/53)
+[CSD Return Interface] Send Data to Buffer Manager (Return Buffer Size : 0.0K)
+
+root@keti-csd-120:~/csd-worker-module/opencsd-storage-node11/keti# ./main sstfile/partsupp/001097.sst
+---------------------------------------------:: STEP3 ::---------------------------------------------
+[CSD Input Interface] Recieve Snippet {ID : 3-0} from Storage Engine Instance
+[CSD Scan] Scanning Data ... (Block : 15/53, Scanned Size : 53.0K)
+[CSD Scan] Scanning Data ... (Block : 30/53, Scanned Size : 52.9K)
+[CSD Scan] Scanning Data ... (Block : 53/53, Scanned Size : 34.8K)
+[CSD Filter] Filtering Data ... (Filtered Size : 0.0K)
+[CSD Filter] Filtering Data ... (Filtered Size : 0.0K)
+[CSD Merge Manager] Merging Block ... (Current Buffer Size : 0.0K)
+[CSD Merge Manager] Merging Block ... (Current Buffer Size : 0.0K)
+[CSD Filter] Filtering Data ... (Filtered Size : 0.0K)
+[CSD Merge Manager] Merging Block ... (Current Buffer Size : 0.0K)
+[CSD Merge Manager] Merging Block {ID : 3-0} Done (Block :53/53)
+[CSD Return Interface] Send Data to Buffer Manager (Return Buffer Size : 0.0K)
+
+root@keti-csd-120:~/csd-worker-module/opencsd-storage-node11/keti# ./main sstfile/partsupp/001112.sst
+---------------------------------------------:: STEP3 ::---------------------------------------------
+[CSD Input Interface] Recieve Snippet {ID : 3-0} from Storage Engine Instance
+[CSD Scan] Scanning Data ... (Block : 15/53, Scanned Size : 52.9K)
+[CSD Scan] Scanning Data ... (Block : 30/53, Scanned Size : 52.9K)
+[CSD Scan] Scanning Data ... (Block : 53/53, Scanned Size : 32.3K)
+[CSD Filter] Filtering Data ... (Filtered Size : 0.0K)
+[CSD Filter] Filtering Data ... (Filtered Size : 0.0K)
+[CSD Merge Manager] Merging Block ... (Current Buffer Size : 0.0K)
+[CSD Merge Manager] Merging Block ... (Current Buffer Size : 0.0K)
+[CSD Filter] Filtering Data ... (Filtered Size : 0.0K)
+[CSD Merge Manager] Merging Block ... (Current Buffer Size : 0.0K)
+[CSD Merge Manager] Merging Block {ID : 3-0} Done (Block :53/53)
+[CSD Return Interface] Send Data to Buffer Manager (Return Buffer Size : 0.0K)
+
+root@keti-csd-120:~/csd-worker-module/opencsd-storage-node11/keti# ./main sstfile/partsupp/001128.sst
+---------------------------------------------:: STEP3 ::---------------------------------------------
+[CSD Input Interface] Recieve Snippet {ID : 3-0} from Storage Engine Instance
+[CSD Scan] Scanning Data ... (Block : 15/53, Scanned Size : 52.9K)
+[CSD Scan] Scanning Data ... (Block : 30/53, Scanned Size : 52.8K)
+[CSD Scan] Scanning Data ... (Block : 53/53, Scanned Size : 36.2K)
+[CSD Filter] Filtering Data ... (Filtered Size : 0.0K)
+[CSD Filter] Filtering Data ... (Filtered Size : 0.0K)
+[CSD Merge Manager] Merging Block ... (Current Buffer Size : 0.0K)
+[CSD Merge Manager] Merging Block ... (Current Buffer Size : 0.0K)
+[CSD Filter] Filtering Data ... (Filtered Size : 0.0K)
+[CSD Merge Manager] Merging Block ... (Current Buffer Size : 0.0K)
+[CSD Merge Manager] Merging Block {ID : 3-0} Done (Block :53/53)
+[CSD Return Interface] Send Data to Buffer Manager (Return Buffer Size : 0.0K)
+
+root@keti-csd-120:~/csd-worker-module/opencsd-storage-node11/keti# ./main sstfile/region/001143.sst
+---------------------------------------------:: STEP3 ::---------------------------------------------
+[CSD Input Interface] Recieve Snippet {ID : 3-0} from Storage Engine Instance
+[CSD Scan] Scanning Data ... (Block : 53/53, Scanned Size : 0.5K)
+[CSD Filter] Filtering Data ... (Filtered Size : 0.0K)
+[CSD Merge Manager] Merging Block ... (Current Buffer Size : 0.0K)
+[CSD Merge Manager] Merging Block {ID : 3-0} Done (Block :53/53)
+[CSD Return Interface] Send Data to Buffer Manager (Return Buffer Size : 0.0K)
+
+root@keti-csd-120:~/csd-worker-module/opencsd-storage-node11/keti# ./main sstfile/supplier/000771.sst
+---------------------------------------------:: STEP3 ::---------------------------------------------
+[CSD Input Interface] Recieve Snippet {ID : 3-0} from Storage Engine Instance
+[CSD Scan] Scanning Data ... (Block : 53/53, Scanned Size : 1.6K)
+[CSD Filter] Filtering Data ... (Filtered Size : 0.0K)
+[CSD Merge Manager] Merging Block ... (Current Buffer Size : 0.0K)
+[CSD Merge Manager] Merging Block {ID : 3-0} Done (Block :53/53)
+[CSD Return Interface] Send Data to Buffer Manager (Return Buffer Size : 0.0K)
+
+root@keti-csd-120:~/csd-worker-module/opencsd-storage-node11/keti# ./main sstfile/supplier/000787.sst
+---------------------------------------------:: STEP3 ::---------------------------------------------
+[CSD Input Interface] Recieve Snippet {ID : 3-0} from Storage Engine Instance
+[CSD Scan] Scanning Data ... (Block : 53/53, Scanned Size : 1.8K)
+[CSD Filter] Filtering Data ... (Filtered Size : 0.0K)
+[CSD Merge Manager] Merging Block ... (Current Buffer Size : 0.0K)
+[CSD Merge Manager] Merging Block {ID : 3-0} Done (Block :53/53)
+[CSD Return Interface] Send Data to Buffer Manager (Return Buffer Size : 0.0K)
+
+root@keti-csd-120:~/csd-worker-module/opencsd-storage-node11/keti# ./main sstfile/supplier/000802.sst
+---------------------------------------------:: STEP3 ::---------------------------------------------
+[CSD Input Interface] Recieve Snippet {ID : 3-0} from Storage Engine Instance
+[CSD Scan] Scanning Data ... (Block : 53/53, Scanned Size : 1.9K)
+[CSD Filter] Filtering Data ... (Filtered Size : 0.0K)
+[CSD Merge Manager] Merging Block ... (Current Buffer Size : 0.0K)
+[CSD Merge Manager] Merging Block {ID : 3-0} Done (Block :53/53)
+[CSD Return Interface] Send Data to Buffer Manager (Return Buffer Size : 0.0K)
+
+root@keti-csd-120:~/csd-worker-module/opencsd-storage-node11/keti# ./main sstfile/supplier/000818.sst
+---------------------------------------------:: STEP3 ::---------------------------------------------
+[CSD Input Interface] Recieve Snippet {ID : 3-0} from Storage Engine Instance
+[CSD Scan] Scanning Data ... (Block : 53/53, Scanned Size : 1.7K)
+[CSD Filter] Filtering Data ... (Filtered Size : 0.0K)
+[CSD Merge Manager] Merging Block ... (Current Buffer Size : 0.0K)
+[CSD Merge Manager] Merging Block {ID : 3-0} Done (Block :53/53)
+[CSD Return Interface] Send Data to Buffer Manager (Return Buffer Size : 0.0K)
+
+root@keti-csd-120:~/csd-worker-module/opencsd-storage-node11/keti# ./main sstfile/supplier/000833.sst
+---------------------------------------------:: STEP3 ::---------------------------------------------
+[CSD Input Interface] Recieve Snippet {ID : 3-0} from Storage Engine Instance
+[CSD Scan] Scanning Data ... (Block : 53/53, Scanned Size : 1.7K)
+[CSD Filter] Filtering Data ... (Filtered Size : 0.0K)
+[CSD Merge Manager] Merging Block ... (Current Buffer Size : 0.0K)
+[CSD Merge Manager] Merging Block {ID : 3-0} Done (Block :53/53)
+[CSD Return Interface] Send Data to Buffer Manager (Return Buffer Size : 0.0K)
+
+root@keti-csd-120:~/csd-worker-module/opencsd-storage-node11/keti# ./main sstfile/supplier/000849.sst
+---------------------------------------------:: STEP3 ::---------------------------------------------
+[CSD Input Interface] Recieve Snippet {ID : 3-0} from Storage Engine Instance
+[CSD Scan] Scanning Data ... (Block : 53/53, Scanned Size : 1.9K)
+[CSD Filter] Filtering Data ... (Filtered Size : 0.0K)
+[CSD Merge Manager] Merging Block ... (Current Buffer Size : 0.0K)
+[CSD Merge Manager] Merging Block {ID : 3-0} Done (Block :53/53)
+[CSD Return Interface] Send Data to Buffer Manager (Return Buffer Size : 0.0K)
+
+root@keti-csd-120:~/csd-worker-module/opencsd-storage-node11/keti# ./main sstfile/supplier/000864.sst
+---------------------------------------------:: STEP3 ::---------------------------------------------
+[CSD Input Interface] Recieve Snippet {ID : 3-0} from Storage Engine Instance
+[CSD Scan] Scanning Data ... (Block : 53/53, Scanned Size : 1.8K)
+[CSD Filter] Filtering Data ... (Filtered Size : 0.0K)
+[CSD Merge Manager] Merging Block ... (Current Buffer Size : 0.0K)
+[CSD Merge Manager] Merging Block {ID : 3-0} Done (Block :53/53)
+[CSD Return Interface] Send Data to Buffer Manager (Return Buffer Size : 0.0K)
+
+root@keti-csd-120:~/csd-worker-module/opencsd-storage-node11/keti# ./main sstfile/supplier/000880.sst
+---------------------------------------------:: STEP3 ::---------------------------------------------
+[CSD Input Interface] Recieve Snippet {ID : 3-0} from Storage Engine Instance
+[CSD Scan] Scanning Data ... (Block : 53/53, Scanned Size : 1.7K)
+[CSD Filter] Filtering Data ... (Filtered Size : 0.0K)
+[CSD Merge Manager] Merging Block ... (Current Buffer Size : 0.0K)
+[CSD Merge Manager] Merging Block {ID : 3-0} Done (Block :53/53)
+[CSD Return Interface] Send Data to Buffer Manager (Return Buffer Size : 0.0K)
