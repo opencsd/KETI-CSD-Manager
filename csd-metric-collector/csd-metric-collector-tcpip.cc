@@ -45,6 +45,8 @@ struct Result { //metric 수집 결과 저장
 
     long long networkUsage, networkTxData, networkRxData; // network
 
+    double CSDMetricScore; // metric score 
+
     std::string ip; // ip
 };
 
@@ -245,6 +247,23 @@ class MetricCollector
             return result->networkUsage;
         }
         
+        void getCSDMetricScore(Result *result){
+            // 가중치 설정
+            const double cpuWeight = 0.33;
+            const double memoryWeight = 0.33;
+            const double diskWeight = 0.33;
+            // const double networkWeight = 0.25;
+
+            // 총 점수 계산
+            double totalScore = cpuWeight * (100 - result->cpuUsagePercent) +
+                                memoryWeight * (100 - result->memUsagePercent) +
+                                diskWeight * (100 - result->diskUsagePercent);
+                                // diskWeight * result->diskUsagePercent +
+                                // networkWeight * (1 - result->networkUsage);
+
+            result->CSDMetricScore = totalScore;
+        }
+
         int workingBlockCount = 0;
 
         void serialize(StringBuffer &buff, Result &result)
@@ -327,7 +346,7 @@ class MetricCollector
             getMemUsage(&result);
             getDiskUsage(&result);
             getNetworkSpeed(&result);
-
+            getCSDMetricScore(&result);
             serialize(buff, result);
             
             // 출력
@@ -351,8 +370,10 @@ class MetricCollector
             std::cout << "Network Received Usage(Byte): " << result.networkRxData << std::endl;
             std::cout << "Network Send Usage(Byte): " << result.networkTxData << std::endl;
             std::cout << "Network Usage(kbps): " << result.networkUsage << std::endl;
-
             std::cout << "\n" << std::endl;      
+
+            std::cout << "CSD Metric Score: " << result.CSDMetricScore << std::endl;  
+            std::cout << "\n" << std::endl;
 
             // JSON 데이터를 문자열로 변환
             const char* jsonStr = buff.GetString();
