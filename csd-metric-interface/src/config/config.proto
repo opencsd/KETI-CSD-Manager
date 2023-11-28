@@ -26,6 +26,8 @@ message CSDMetricRequest { // csd metric 전송
 	int32 networkBandwidth = 11;
 	int32 networkRxData = 12;
 	int32 networkTxData = 13;
+
+	double csdMetricScore = 14;
 }
 
 message MetricResponse { // csd metric 응답

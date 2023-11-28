@@ -6,6 +6,8 @@
 #include <unistd.h>
 #include <arpa/inet.h>
 #include <sys/socket.h>
+#include <sys/ioctl.h>
+#include <net/if.h>
 #include <netinet/in.h>
 #include "ip_config.h"
 #include <fstream>
@@ -15,6 +17,10 @@
 #include <chrono>
 #include <thread>
 #include <atomic>
+
+#include <stdio.h>
+#include <string.h>
+#include <sys/stat.h>
 
 #include "rapidjson/document.h"
 #include "rapidjson/writer.h"
@@ -45,7 +51,7 @@ struct Result { //metric 수집 결과 저장
 
     long long networkUsage, networkTxData, networkRxData; // network
 
-    double CSDMetricScore; // metric score 
+    double csdMetricScore; // metric score 
 
     std::string ip; // ip
 };
@@ -71,8 +77,9 @@ class MetricCollector
 {
 
     private:
-        long long initialRxBytes, initialTxBytes, currentRxBytes, currentTxBytes; // network
         stJiffies curJiffies, prevJiffies, diffJiffies; // cpu
+        long long initialRxBytes, initialTxBytes, currentRxBytes, currentTxBytes; // network
+        long long initialEnergy1, initialEnergy2, currentEnergy1, currentEnergy2;// power
 
     public:
         thread runThread;
@@ -108,6 +115,21 @@ class MetricCollector
             initialTxBytes = std::stoll(initialTxBytesStr);
         }
 
+        void powerUsageInit(){
+            string powerFilePath1 = "intel-rapl:0";
+            string powerFilePath2 = "intel-rapl:1";
+
+            string energyFieldName1 = "/sys/class/powercap/" + powerFilePath1 + "/energy_uj"; 
+            string energyFieldName2 = "/sys/class/powercap/" + powerFilePath2 + "/energy_uj"; 
+
+            string initialEnergyStr1 = readStatisticsField(energyFieldName1);
+            string initialEnergyStr2 = readStatisticsField(energyFieldName2);
+
+            initialEnergy1 = std::stoll(initialEnergyStr1);
+            initialEnergy2 = std::stoll(initialEnergyStr2);
+
+        }
+
         string readStatisticsField(const string &fieldName) const {
             ifstream file(fieldName);
             string line;
@@ -116,7 +138,18 @@ class MetricCollector
             return value;
         }
 
-        double getCpuUsage(Result *result)
+        void getIPAddress(Result *result) {
+            const char* csd_ip = std::getenv("CSD_IP");
+
+            if (csd_ip) {
+                std::cout << "CSD_IP environment variable: " << csd_ip << std::endl;
+                result->ip = csd_ip;
+            } else {
+                std::cout << "CSD_IP environment variable not set." << std::endl;
+            }
+        }
+
+        void getCpuUsage(Result *result)
         {
             FILE *pStat = NULL;
             char cpuID[6] = {0};
@@ -141,23 +174,23 @@ class MetricCollector
             
             if (!fp) {
                 std::cerr << "Error: popen failed." << std::endl;
-                return -1;
+                // return -1;
             }
             
             if (fscanf(fp, "%d", &coreCount) != 1) {
                 std::cerr << "Error: Failed to read CPU core count." << std::endl;
                 pclose(fp);
-                return -1;
+                // return -1;
             }
             result->totalCpuCapacity = coreCount;
             pclose(fp);
 
             // 현재 cpu 코어 사용량
             result->cpuUsage = (float)result->totalCpuCapacity * (1.0-(diffJiffies.idle / (double) totalJiffies));
-            return result->cpuUsage;
+            // return result->cpuUsage;
         }
 
-        float getMemUsage(Result *result) {
+        void getMemUsage(Result *result) {
             std::ifstream meminfo("/metric/cpuMemUsage/meminfo");
             MemoryInfo info;
 
@@ -184,10 +217,10 @@ class MetricCollector
             result->memUsage = info.MemTotal - info.MemFree - info.Buffers - info.Cached;
             result->memUsagePercent = (1.0 - static_cast<double>(info.MemFree + info.Buffers + info.Cached) / info.MemTotal) * 100.0;
             
-            return result->memUsagePercent;
+            // return result->memUsagePercent;
         }
 
-        float getDiskUsage(Result *result) {
+        void getDiskUsage(Result *result) {
             // DiskInfo diskInfo;
             // Run the df command and read its output
             std::string dfCommand = "df -k --total";
@@ -213,12 +246,11 @@ class MetricCollector
             }
 
             result->diskUsagePercent = static_cast<float>(result->diskUsage) / result->totalDiskCapacity * 100;
-            return result->diskUsagePercent;    
+            // return result->diskUsagePercent;    
         }
 
-        float getNetworkSpeed(Result *result)
+        void getNetworkSpeed(Result *result)
         {
-            float networkSpeed = 0;
             string statisticsFilePath = "/metric/networkUsage/";
             // string statisticsFilePath = "/sys/class/net/eno1/statistics/";
             
@@ -244,9 +276,27 @@ class MetricCollector
             initialRxBytes = currentRxBytes;
             initialTxBytes = currentTxBytes;
    
-            return result->networkUsage;
+            // return result->networkUsage;
         }
         
+        float getPowerUsage(Result *result){
+            string powerFilePath1 = "intel-rapl:0";
+            string powerFilePath2 = "intel-rapl:1";
+
+            string energyFieldName1 = "/sys/class/powercap/" + powerFilePath1 + "/energy_uj"; 
+            string energyFieldName2 = "/sys/class/powercap/" + powerFilePath2 + "/energy_uj"; 
+
+            string initialEnergyStr1 = readStatisticsField(energyFieldName1);
+            string initialEnergyStr2 = readStatisticsField(energyFieldName2);
+
+            initialEnergy1 = std::stoll(initialEnergyStr1);
+            initialEnergy2 = std::stoll(initialEnergyStr2);
+
+            //현재 파워 사용량
+            result->powerUsage = ((currentEnergy1 - initialEnergy1) + (currentEnergy2 - initialEnergy2));
+
+        }
+
         void getCSDMetricScore(Result *result){
             // 가중치 설정
             const double cpuWeight = 0.33;
@@ -261,7 +311,7 @@ class MetricCollector
                                 // diskWeight * result->diskUsagePercent +
                                 // networkWeight * (1 - result->networkUsage);
 
-            result->CSDMetricScore = totalScore;
+            result->csdMetricScore = totalScore;
         }
 
         int workingBlockCount = 0;
@@ -302,6 +352,8 @@ class MetricCollector
             writer.Key("networkBandwidth");
             writer.Int(result.networkUsage);
 
+            writer.Key("csdMetricScore");
+            writer.Double(result.csdMetricScore);
             writer.EndObject();
         }
 
@@ -337,19 +389,22 @@ class MetricCollector
 
             char ipBuffer[INET_ADDRSTRLEN];
             const char *clientIP = inet_ntop(AF_INET, &(localAddress.sin_addr), ipBuffer, INET_ADDRSTRLEN);
-            
+
             // metric collect
             Result result;
-            result.ip = ipBuffer;
 
+            getIPAddress(&result);
             getCpuUsage(&result);
             getMemUsage(&result);
             getDiskUsage(&result);
             getNetworkSpeed(&result);
+            // getPowerUsage(&result);
             getCSDMetricScore(&result);
             serialize(buff, result);
             
             // 출력
+            std::cout << "ip: " << result.ip << std::endl;
+            std::cout << "\n" << std::endl;
             std::cout << "Total CPU Capacity: " << result.totalCpuCapacity << std::endl;
             std::cout << "CPU Usage: " << result.cpuUsage << std::endl;
             std::cout << "CPU Usage Percent: " << result.cpuUsagePercent << "%" << std::endl;
@@ -372,7 +427,7 @@ class MetricCollector
             std::cout << "Network Usage(kbps): " << result.networkUsage << std::endl;
             std::cout << "\n" << std::endl;      
 
-            std::cout << "CSD Metric Score: " << result.CSDMetricScore << std::endl;  
+            std::cout << "CSD Metric Score: " << result.csdMetricScore << std::endl;  
             std::cout << "\n" << std::endl;
 
             // JSON 데이터를 문자열로 변환
@@ -381,9 +436,6 @@ class MetricCollector
             // socket 보낸 후, 닫기
             send(sock, jsonStr, strlen(jsonStr), 0);
             close(sock);
-
-            //수집 주기(2초마다 대기)
-            // this_thread::sleep_for(chrono::seconds(2));
         }
 };
 
