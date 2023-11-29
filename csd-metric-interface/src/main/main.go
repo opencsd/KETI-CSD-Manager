@@ -17,8 +17,9 @@ import (
 
 // Metric 구조체 정의
 type Metric struct {
-	Id           	  int     `json:"id"`
-	
+	Ip           	  string  `json:"ip"`
+	Id 				  int     
+
 	TotalCpuCapacity  int 	  `json:"totalCpuCapacity"`
 	CpuUsage		  float64 `json:"cpuUsage"`
 	CpuUsagePercent	  float64 `json:"cpuUsagePercent"`
@@ -34,6 +35,8 @@ type Metric struct {
 	NetworkBandwidth  int     `json:"networkBandwidth"`
 	NetworkRxData	  int     `json:"networkRxData"`
 	NetworkTxData	  int     `json:"networkTxData"`
+
+	CsdMetricScore    float64 `json:"csdMetricScore"`
 }
 
 func main() {
@@ -86,20 +89,20 @@ func CSDMetricReceiver(conn net.Conn, metric *Metric) {
 	}
 	
 	// csd id 생성
-	clientAddr := conn.RemoteAddr().String()
-	metric.Id = extractCSDId(clientAddr)
+	// clientAddr := conn.RemoteAddr().String()
+	// fmt.Println(clientAddr)
+	metric.Id = extractCSDId(metric.Ip)
 
 	// Unmarshal된 구조체 값 출력
 	fmt.Printf("ID: %d\nTotalCpuCapacity: %d\nCpuUsage: %f\nCpuUsagePercent: %f\n", metric.Id, metric.TotalCpuCapacity, metric.CpuUsage, metric.CpuUsagePercent)
 	fmt.Printf("TotalMemCapacity: %d\nMemUsage: %d\nMemUsagePercent: %f\n", metric.TotalMemCapacity, metric.MemUsage, metric.MemUsagePercent)
 	fmt.Printf("TotalDiskCapacity: %d\nDiskUsage: %d\nDiskUsagePercent: %f\n", metric.TotalDiskCapacity, metric.DiskUsage, metric.DiskUsagePercent)
 	fmt.Printf("NetworkBandwidth: %d\nNetworkRxUsage: %d\nNetworkTxUsage: %d\n", metric.NetworkBandwidth, metric.NetworkRxData, metric.NetworkTxData)
+	fmt.Printf("CSDMetricScore: %f", metric.CsdMetricScore)
 }
 
 // grpc 서버 접속 및 메트릭 전송
 func CSDMetricSender(ip string, port string, metric *Metric) {
-	// fmt.Printf("Received JSON Data:\nID: %d\nCPU Usage: %.2f\nMem Usage: %.2f\nNetwork Speed: %.2f\n",
-	// metric.ID, metric.CPUUsage, metric.MemUsage, metric.NetworkSpeed)
 	
 	// gRPC 서버에 연결
     conn, err := grpc.Dial(ip + ":" + port, grpc.WithInsecure())
@@ -124,7 +127,8 @@ func CSDMetricSender(ip string, port string, metric *Metric) {
 		DiskUsagePercent : float64(metric.DiskUsagePercent), 
 		NetworkBandwidth : int32(metric.NetworkBandwidth), 
 		NetworkRxData : int32(metric.NetworkRxData), 
-		NetworkTxData : int32(metric.NetworkTxData)}
+		NetworkTxData : int32(metric.NetworkTxData),
+		CsdMetricScore : float64(metric.CsdMetricScore)}
     
 	// grpc 서버 응답
 	response, err := client.ReceiveCSDMetric(context.Background(), request)
@@ -143,6 +147,7 @@ func extractCSDId(addr string) int {
 		if err != nil{
 			fmt.Println("CSD Id Parsing Fail")
 		}
+
 		return Id
 	}
 	return 0

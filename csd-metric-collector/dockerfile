@@ -1,15 +1,8 @@
 FROM ubuntu:18.04
 
-# RUN mkdir -p /home/metric/cpuMemUsage
-# RUN mkdir -p /home/metric/networkUsage
-# RUN apt update
-# RUN apt-get install iputils-ping
-# RUN apt-get install net-tools
+#csd_ip => 환경변수 설정
+ARG csd_ip 
+ENV CSD_IP=$csd_ip
 
 # 실행 파일을 컨테이너 내부로 복사
 COPY csd-metric-collector-tcpip-aarch64 /csd-metric-collector-tcpip-aarch64
-# COPY csd-metric-collector-tcpip /csd-metric-collector-tcpip
-# COPY test /test
-
-# 실행 파일을 컨테이너 실행 명령으로 설정
-# CMD ["/csd-metric-collector-tcpip-aarch64"]
