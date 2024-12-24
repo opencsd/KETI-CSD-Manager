@@ -2,7 +2,7 @@
 -------------
 CSD-Worker-Module for KETI-OpenCSD Platform
 
-Developed by KETI
+Developed by KETI#
 
 ## Contents
 -------------
